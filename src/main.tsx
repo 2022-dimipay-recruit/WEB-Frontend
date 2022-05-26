@@ -7,7 +7,8 @@ import {
 } from 'react-router-dom';
 import { globalCss } from '#/stitches.config';
 import {
-  Login
+  Login,
+  FlexileTest,
 } from '@/pages';
 
 import '@/assets/Pretendard/index.css';
@@ -38,6 +39,7 @@ const Router = () => {
   return (
     <Routes>
       <Route path='/login' element={<Login />} />
+      <Route path='/test' element={<FlexileTest />} />
     </Routes>
   );
 }
