@@ -3,7 +3,7 @@ import { Hexile } from '@haechi/flexile';
 
 export const Wrapper = styled(Hexile, {
   borderRadius: '2.6rem',
-  padding: '1.4rem 3.6rem',
+  padding: '1rem 2.8rem',
   cursor: 'pointer',
   fontSize: '2rem',
   fontWeight: 700,
