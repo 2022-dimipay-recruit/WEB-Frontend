@@ -1,7 +1,7 @@
 import React from 'react';
 import { Wrapper } from './style';
 
-const Button: React.FC<{
+export const Button: React.FC<{
   large?: boolean;
   type: 'black' | 'bright' | 'deep';
   value: string;
@@ -10,5 +10,3 @@ const Button: React.FC<{
     <Wrapper type={type} fillx={large} x='center' y='center'>{value}</Wrapper>
   );
 }
-
-export default Button;

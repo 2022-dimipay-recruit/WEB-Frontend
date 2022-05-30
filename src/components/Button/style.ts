@@ -22,5 +22,13 @@ export const Wrapper = styled(Hexile, {
         color: '$brightGreen',
       }
     },
+    large: {
+      true: {
+        width: '100%',
+      },
+      false: {
+        width: 'auto',
+      }
+    }
   }
 });
