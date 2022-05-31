@@ -2,11 +2,11 @@ import { createStitches } from '@stitches/react';
 
 export const COLORS = {
   whiteGreen: '#FCFEFD',
-  brightGreen: '#C7F5DF',
-  baseGreen: '#A1EEC9',
+  brightGreen: '#EBF7F1',
+  baseGreen: '#D1EBDF',
   darkGreen: '#97C5AF',
   blackGreen: '#618F79',
-  deepGreen: '#507765'
+  deepGreen: '#405F50'
 };
 
 export const {
