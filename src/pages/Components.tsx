@@ -1,25 +1,32 @@
 import React from 'react';
 import { styled } from '#/stitches.config';
-import { Vexile } from '@haechi/flexile';
+import { Vexile, Hexile } from '@haechi/flexile';
 import {
   Button,
-  Radio
+  Radio,
+  Selection,
 } from '@/components';
 
 const Components: React.FC = () => {
   return (
     <Wrapper x='center' y='space'>
-      <Button value='Black Button' type='black' />
-      <Button value='Bright Button' type='bright' />
-      <Button value='Deep Button' type='deep' />
-      <Button value='Black Large Button' type='black' large />
-      <Button value='Bright Large Button' type='bright' large />
-      <Button value='Deep Large Button' type='deep' large />
-      <Radio value='test' label='content' id='test' name='radio' />
+      <Button type='black'>Black Button</Button>
+      <Button type='bright'>Bright Button</Button>
+      <Button type='deep'>Deep Button</Button>
+      <Button type='black' large>Black Large Button</Button>
+      <Button type='bright' large>Bright Large Button</Button>
+      <Button type='deep' large>Deep Large Button</Button>
+      <Radio value='test' label='content' id='test' name='radio' check />
       <Radio value='test1' label='content1' id='test1' name='radio' />
+      <Hexile x='space' fillx>
+        <Selection>Selection</Selection>
+        <Selection active>Selection</Selection>
+        <Selection>Selection</Selection>
+        <Selection>Selection</Selection>
+      </Hexile>
     </Wrapper>
   );
-}
+};
 
 export default Components;
 

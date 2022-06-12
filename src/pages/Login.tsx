@@ -7,13 +7,13 @@ const Login: React.FC = () => {
   return (
     <Wrapper>
       <Vexile fillx filly x='center' y='center'>
-        <Button value='Button' type='bright' />
-        <Button value='Button' type='black' />
-        <Button value='Button' type='deep' />
+        <Button type='bright'>Button</Button>
+        <Button type='black'>Button</Button>
+        <Button type='deep'>Button</Button>
       </Vexile>
     </Wrapper>
   );
-}
+};
 
 export default Login;
 

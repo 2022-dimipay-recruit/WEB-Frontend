@@ -4,9 +4,9 @@ import { Wrapper } from './style';
 export const Button: React.FC<{
   large?: boolean;
   type: 'black' | 'bright' | 'deep';
-  value: string;
-}> = ({large = false, type, value}) => {
+  children: string;
+}> = ({large = false, type, children}) => {
   return (
-    <Wrapper type={type} fillx={large} x='center' y='center'>{value}</Wrapper>
+    <Wrapper type={type} fillx={large} x='center' y='center'>{children}</Wrapper>
   );
-}
+};
