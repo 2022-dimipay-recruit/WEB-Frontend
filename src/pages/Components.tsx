@@ -7,7 +7,8 @@ import {
   Selection,
   SearchBar,
   Input,
-  Checkbox
+  Checkbox,
+  Heart
 } from '@/components';
 
 const Components: React.FC = () => {
@@ -36,6 +37,8 @@ const Components: React.FC = () => {
       </div>
       <Checkbox value='a' label='Content' id='check1' />
       <Checkbox value='b' label='Content' id='check2' check />
+      <Heart heart={80} />
+      <Heart heart={100} active />
     </Wrapper>
   );
 };

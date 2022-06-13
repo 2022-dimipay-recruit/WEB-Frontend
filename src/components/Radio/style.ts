@@ -21,7 +21,6 @@ export const RadioBtn = styled('input', {
 export const Label = styled('label', {
   color: '$blackGreen',
   fontWeight: 700,
-  fontSize: '1.6rem',
   paddingLeft: '3rem',
   position: 'relative',
   cursor: 'pointer',
