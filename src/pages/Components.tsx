@@ -6,7 +6,8 @@ import {
   Radio,
   Selection,
   SearchBar,
-  Input
+  Input,
+  Checkbox
 } from '@/components';
 
 const Components: React.FC = () => {
@@ -33,6 +34,8 @@ const Components: React.FC = () => {
       <div style={{width: '50%'}}>
         <Input placeholder='Text' value={inputStr} setValue={setInputStr} type='text' />
       </div>
+      <Checkbox value='a' label='Content' id='check1' />
+      <Checkbox value='b' label='Content' id='check2' check />
     </Wrapper>
   );
 };
