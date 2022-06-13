@@ -30,4 +30,9 @@ export const {
       fontSize: '1.4rem'
     })
   },
+  media: {
+    mobile: '(min-width: 640px)',
+    pad: '(min-width: 768px)',
+    desktop: '(min-width: 1024px)',
+  },
 });

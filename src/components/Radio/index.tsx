@@ -6,11 +6,18 @@ export const Radio: React.FC<{
   label: string;
   id: string;
   name: string;
-}> = ({ value, label, id, name }) => {
+  check?: boolean;
+}> = ({
+  value,
+  label,
+  id,
+  name,
+  check=false
+}) => {
   return (
     <Wrapper y='center'>
-      <RadioBtn type='radio' value={value} id={id} name={name} />
+      <RadioBtn type='radio' value={value} id={id} name={name} defaultChecked={check} />
       <Label htmlFor={id}>{label}</Label>
     </Wrapper>
   );
-}
+};
