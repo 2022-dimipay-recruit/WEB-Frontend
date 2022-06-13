@@ -1,7 +1,7 @@
-import React from "react";
-import { styled } from "#/stitches.config";
-import { Button } from "@/components";
-import { Vexile } from "@haechi/flexile";
+import React from 'react';
+import { styled } from '#/stitches.config';
+import { Button } from '@/components';
+import { Vexile } from '@haechi/flexile';
 
 const Login: React.FC = () => {
   return (

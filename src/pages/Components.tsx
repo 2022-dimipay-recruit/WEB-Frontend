@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from '#/stitches.config';
 import { Vexile, Hexile } from '@haechi/flexile';
 import {
   Button,
   Radio,
   Selection,
+  SearchBar,
 } from '@/components';
 
 const Components: React.FC = () => {
+  const [searchStr, setSearchStr] = useState<string>("");
+
   return (
     <Wrapper x='center' y='space'>
       <Button type='black'>Black Button</Button>
@@ -24,6 +27,7 @@ const Components: React.FC = () => {
         <Selection>Selection</Selection>
         <Selection>Selection</Selection>
       </Hexile>
+      <SearchBar placeholder='Search' value={searchStr} setValue={setSearchStr} />
     </Wrapper>
   );
 };
