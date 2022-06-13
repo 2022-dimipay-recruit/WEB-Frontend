@@ -9,7 +9,6 @@ export const Text = styled('span', {
   marginLeft: '2.2rem',
   color: '$blackGreen',
   fontWeight: 500,
-  fontSize: '1.6rem',
 });
 export const Box = styled('div', {
   width: '100%',
@@ -19,7 +18,6 @@ export const InputBox = styled('input', {
   padding: '1.2rem 4.5rem 1.2rem 2rem',
   color: '$deepGreen',
   fontWeight: 500,
-  fontSize: '1.6rem',
   width: '100%',
   outline: 'none',
   border: 'none',
