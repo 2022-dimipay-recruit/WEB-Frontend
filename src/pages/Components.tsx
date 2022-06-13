@@ -6,10 +6,12 @@ import {
   Radio,
   Selection,
   SearchBar,
+  Input
 } from '@/components';
 
 const Components: React.FC = () => {
   const [searchStr, setSearchStr] = useState<string>("");
+  const [inputStr, setInputStr] = useState<string>("");
 
   return (
     <Wrapper x='center' y='space'>
@@ -28,6 +30,9 @@ const Components: React.FC = () => {
         <Selection>Selection</Selection>
       </Hexile>
       <SearchBar placeholder='Search' value={searchStr} setValue={setSearchStr} />
+      <div style={{width: '50%'}}>
+        <Input placeholder='Text' value={inputStr} setValue={setInputStr} type='text' />
+      </div>
     </Wrapper>
   );
 };
@@ -36,7 +41,7 @@ export default Components;
 
 const Wrapper = styled(Vexile, {
   width: '50vw',
-  height: '80vh',
+  height: '90vh',
   border: '1px solid black',
   borderRadius: '1rem',
   padding: '2rem'
