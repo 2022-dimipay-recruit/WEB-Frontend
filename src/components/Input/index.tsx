@@ -13,7 +13,7 @@ export const Input: React.FC<{
   placeholder,
 }) => {
   const cancel = () => {
-    setValue("");
+    setValue('');
   }
   
   return (
