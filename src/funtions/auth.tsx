@@ -29,7 +29,6 @@ export const Screen: React.FC<{
 
   useEffect(() => {
     (async () => {
-      console.log("Aa");
       setElement(await checkAuth(Children));
 
       if(!getAccessToken()) return;
@@ -48,13 +47,14 @@ export const Screen: React.FC<{
 const Container = styled('div', {
   width: '100vw',
   height: '100vh',
+  position: 'relative',
   '@desktop': {
-    padding: '6rem 20rem 0 20rem',
+    padding: '0 20rem',
   },
   '@pad': {
-    padding: '4rem 10rem 0 10rem',
+    padding: '0 10rem',
   },
   '@mobile': {
-    padding: '1rem 3rem 0 3rem',
+    padding: '0 3rem',
   }
 });

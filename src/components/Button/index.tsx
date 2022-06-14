@@ -5,8 +5,9 @@ export const Button: React.FC<{
   large?: boolean;
   type: 'black' | 'bright' | 'deep';
   children: string;
-}> = ({large = false, type, children}) => {
+  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
+}> = ({large = false, type, children, onClick}) => {
   return (
-    <Wrapper type={type} fillx={large} x='center' y='center'>{children}</Wrapper>
+    <Wrapper type={type} fillx={large} x='center' y='center' onClick={onClick}>{children}</Wrapper>
   );
 };
