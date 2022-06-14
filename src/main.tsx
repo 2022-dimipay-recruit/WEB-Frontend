@@ -9,9 +9,10 @@ import { globalCss } from '#/stitches.config';
 import {
   Main,
   Login,
-  Components
+  Components,
+  Signup,
 } from '@/pages';
-import { Screen } from '@/funtions/auth';
+import { Screen, ExceptionPage } from '@/funtions';
 import { RecoilRoot } from 'recoil';
 
 import '@/assets/Pretendard/index.css';
@@ -45,7 +46,8 @@ const Router = () => {
   return (
     <Routes>
       <Route path='/' element={<Screen Children={Main} />} />
-      <Route path='/login' element={<Login />} />
+      <Route path='/login' element={<ExceptionPage Children={Login} />} />
+      <Route path='/signup' element={<ExceptionPage Children={Signup} />} />
       <Route path='/components' element={<Components />} />
     </Routes>
   );

@@ -19,7 +19,7 @@ const Main: React.FC = () => {
           <Title>더욱 빠르고 쉬운 익명질문, Pasked.</Title>
           <Content>Packed은 직관적인 모습과 빠른 속도로 더 즐겁게 익명질문을 할 수 있습니다. 또한, 욕설와 비속어로부터 사용자를 보호하여 더 깨끗한 익명질문 문화를 선도하고 있습니다!</Content>
         </Vexile>
-        <Button type='black' onClick={() => history(MyData ? '/myPage' : '/login')}>시작하기</Button>
+        <Button color='black' onClick={() => history(MyData ? '/myPage' : '/signup')}>시작하기</Button>
       </ContentBox>
       <IntroBox gap={3.3}>
         <IntroIcn src={Intro1} />

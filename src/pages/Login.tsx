@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { styled } from '#/stitches.config';
 import { Vexile } from '@haechi/flexile';
 import { loginWithInfo } from '@/api';
-import makeAlert from '@/funtions/makeAlert';
+import { makeAlert } from '@/funtions';
 import { useSetRecoilState } from 'recoil';
 import { MyInfoState } from '@/state';
 import { UserInfo } from '@/constants/types';
@@ -45,6 +45,6 @@ const Login: React.FC = () => {
 export default Login;
 
 const Wrapper = styled('div', {
-  width: '100%',
-  height: '100%',
+  width: '100vw',
+  height: '100vh',
 });

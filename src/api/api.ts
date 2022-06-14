@@ -1,5 +1,5 @@
 import axios from 'axios';
-import makeAlert from '@/funtions/makeAlert';
+import { makeAlert } from '@/funtions';
 import { APIResource, clearToken, getAccessToken } from '.';
 import { toast } from 'react-toastify';
 

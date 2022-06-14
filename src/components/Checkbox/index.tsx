@@ -3,7 +3,7 @@ import { Wrapper, Input, Label } from './style';
 
 export const Checkbox: React.FC<{
   value: string;
-  label: string;
+  label: string | JSX.Element;
   id: string;
   check?: boolean;
 }> = ({

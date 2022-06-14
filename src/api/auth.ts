@@ -4,7 +4,7 @@ import { cookieJar } from '../storage';
 import sha256 from 'sha256';
 import { COOKIE_JAR_KEY } from '@/constants/cookieJarKeys';
 import { fetchMyData } from './user';
-import makeAlert from '@/funtions/makeAlert';
+import { makeAlert } from '@/funtions';
 
 export const getAccessToken = (): string | undefined => cookieJar.get(COOKIE_JAR_KEY.ACCESS_TOKEN);
 export const getRefreshToken = (): string | undefined => cookieJar.get(COOKIE_JAR_KEY.REFRESH_TOKEN);
