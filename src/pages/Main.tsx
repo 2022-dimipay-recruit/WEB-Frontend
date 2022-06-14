@@ -13,7 +13,7 @@ const Main: React.FC = () => {
   const history = useNavigate();
 
   return (
-    <Wrapper x='space' y='center' fillx>
+    <Wrapper x='space' y='center' fillx linebreak>
       <ContentBox y='space' x='left' gap={3}>
         <Vexile gap={2.4} fillx>
           <Title>더욱 빠르고 쉬운 익명질문, Pasked.</Title>
@@ -34,7 +34,6 @@ export default Main;
 const Wrapper = styled(Hexile, {
   height: '100%',
   '@mobile': {
-    flexDirection: 'column',
     padding: '10.4rem 0 10rem 0',
     height: 'auto',
     gap: '6rem',

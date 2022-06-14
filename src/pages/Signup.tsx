@@ -30,7 +30,7 @@ const Signup: React.FC = () => {
       <Title>회원가입</Title>
       <Form onSubmit={SignupSubmit}>
         <Vexile gap={3.6} fillx>
-          <Box y='top' gap={6.4}>
+          <Hexile y='top' gap={6.4} linebreak>
             <Container gap={2.4}>
               <Input
               placeholder='성명 *'
@@ -63,7 +63,7 @@ const Signup: React.FC = () => {
               <ProfileImg />
               <Button color='black'>업로드</Button>
             </ProfileContainer>
-          </Box>
+          </Hexile>
           <PolicyBox y='center' x='space'>
             <Checkbox
             id='policyAllow'
@@ -100,11 +100,6 @@ const Title = styled('span', {
 
 const Form = styled('form', {
   width: '100%',
-});
-const Box = styled(Hexile, {
-  '@mobile': {
-    flexDirection: 'column',
-  },
 });
 const Container = styled(Vexile, {
   width: '70%',
