@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChatIcn, NotificationIcn, Title, ProfileImg, Name, Wrapper } from './style';
+import { ChatIcn, NotificationIcn, Title, ProfileImg, Name, Wrapper, ProfileBox } from './style';
 import { Hexile } from '@haechi/flexile';
 import { SearchBar, Button } from '@/components';
 import { useRecoilValue } from 'recoil';
@@ -23,10 +23,10 @@ export const Topbar: React.FC = () => {
               <ChatIcn />
               <NotificationIcn />
             </Hexile>
-            <Hexile y='center' filly gap={1}>
-              <ProfileImg src={`${import.meta.env.VITE_API_URI}${userData?.profile || '/defaultProfile.jpg'}`} />
-              <Name>{userData?.name || '로그인'}</Name>
-            </Hexile>
+            <ProfileBox y='center' filly gap={1}>
+              <ProfileImg src={`${import.meta.env.VITE_API_URI}/assets${userData?.profile || '/defaultProfile.jpg'}`} crossOrigin="anonymous" />
+              <Name>{userData?.name}</Name>
+            </ProfileBox>
           </Hexile>
         ) : (
           <Button type='black' onClick={() => history('/login')}>로그인</Button>

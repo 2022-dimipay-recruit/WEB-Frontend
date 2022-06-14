@@ -38,6 +38,10 @@ export const NotificationIcn = styled(Notification, {
   height: '2.4rem',
   cursor: 'pointer',
 });
+
+export const ProfileBox = styled(Hexile, {
+  cursor: 'pointer',
+});
 export const ProfileImg = styled('img', {
   width: '3.2rem',
   height: '3.2rem',
