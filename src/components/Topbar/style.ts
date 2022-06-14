@@ -27,6 +27,9 @@ export const Title = styled(Link, {
   fontWeight: 700,
   cursor: 'pointer',
   textDecoration: 'none',
+  '@mobile': {
+    display: 'none',
+  }
 });
 export const ChatIcn = styled(Chat, {
   width: '2.4rem',

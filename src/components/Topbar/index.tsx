@@ -29,7 +29,7 @@ export const Topbar: React.FC = () => {
             </ProfileBox>
           </Hexile>
         ) : (
-          <Button color='black' onClick={() => history('/login')}>로그인</Button>
+          <Button color='black' onClick={() => history('/login')} responsive>로그인</Button>
         )
       }
     </Wrapper>

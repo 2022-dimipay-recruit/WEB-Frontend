@@ -7,14 +7,16 @@ export const Button: React.FC<{
   type?: 'button' | 'submit';
   children: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  responsive?: boolean;
 }> = ({
   large = false,
   color,
   type = 'button',
   children,
   onClick,
+  responsive = false,
 }) => {
   return (
-    <Wrapper color={color} large={large} onClick={onClick} type={type}>{children}</Wrapper>
+    <Wrapper color={color} large={large} onClick={onClick} type={type} responsive={responsive}>{children}</Wrapper>
   );
 };

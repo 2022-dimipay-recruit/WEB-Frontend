@@ -30,6 +30,14 @@ export const Wrapper = styled('button', {
       false: {
         width: 'auto',
       }
+    },
+    responsive: {
+      true: {
+        '@mobile': {
+          padding: '.8rem 2rem',
+          fontSize: '1.6rem',
+        }
+      }
     }
   }
 });
