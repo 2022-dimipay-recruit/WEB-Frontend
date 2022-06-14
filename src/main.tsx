@@ -7,11 +7,17 @@ import {
 } from 'react-router-dom';
 import { globalCss } from '#/stitches.config';
 import {
+  Main,
   Login,
   Components
 } from '@/pages';
+import { Screen } from '@/funtions/auth';
+import { RecoilRoot } from 'recoil';
 
 import '@/assets/Pretendard/index.css';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.min.css';
 
 globalCss({
   ':root': {
@@ -38,6 +44,7 @@ globalCss({
 const Router = () => {
   return (
     <Routes>
+      <Route path='/' element={<Screen Children={Main} />} />
       <Route path='/login' element={<Login />} />
       <Route path='/components' element={<Components />} />
     </Routes>
@@ -47,7 +54,10 @@ const Router = () => {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Router />
+      <RecoilRoot>
+        <Router />
+      </RecoilRoot>
     </BrowserRouter>
+    <ToastContainer />
   </React.StrictMode>
 );
