@@ -36,27 +36,27 @@ const Signup: React.FC = () => {
               placeholder='성명 *'
               value={name}
               setValue={setName}
-              type='text'/>
+              type='text' />
               <Input
               placeholder='아이디 *'
               value={userName}
               setValue={setUserName}
-              type='text'/>
+              type='text' />
               <Input
               placeholder='이메일 *'
               value={email}
               setValue={setEmail}
-              type='email'/>
+              type='email' />
               <Input
               placeholder='비밀번호 *'
               value={password}
               setValue={setPassword}
-              type='password'/>
+              type='password' />
               <Input
               placeholder='비밀번호 재입력 *'
               value={verify}
               setValue={setVerify}
-              type='password'/>
+              type='password' />
             </Container>
             <ProfileContainer x='center' gap={1}>
               <ProfileTitle>프로필 사진</ProfileTitle>

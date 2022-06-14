@@ -3,6 +3,7 @@ import { styled } from '#/stitches.config';
 
 import { ReactComponent as Chat } from '@/assets/icons/chat.svg';
 import { ReactComponent as Notification } from '@/assets/icons/notifications.svg';
+import { ReactComponent as NotificationFill } from '@/assets/icons/notificationsFill.svg';
 import { Hexile } from '@haechi/flexile';
 
 export const Wrapper = styled(Hexile, {
@@ -41,7 +42,24 @@ export const NotificationIcn = styled(Notification, {
   height: '2.4rem',
   cursor: 'pointer',
 });
+export const NotificationIcnActive = styled(NotificationFill, {
+  width: '2.4rem',
+  height: '2.4rem',
+  cursor: 'pointer',
+});
 
+export const ProfileContainer = styled(Hexile, {
+  gap: '3.6rem',
+  '@mobile': {
+    gap: '1rem',
+  }
+});
+export const IcnBox = styled(Hexile, {
+  gap: '2.4rem',
+  '@mobile': {
+    gap: '1rem',
+  }
+});
 export const ProfileBox = styled(Hexile, {
   cursor: 'pointer',
 });
@@ -52,5 +70,8 @@ export const ProfileImg = styled('img', {
 });
 export const Name = styled('span', {
   color: '$blackGreen',
-  fontWeight: 500
+  fontWeight: 500,
+  '@mobile': {
+    display: 'none',
+  },
 });

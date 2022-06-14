@@ -7,6 +7,7 @@ export const Wrapper = styled(Hexile, {
   width: '65%',
   background: '$brightGreen',
   borderRadius: '2rem',
+  position: 'relative',
 });
 export const SearchIcn = styled(Search, {
   width: '1.5rem',

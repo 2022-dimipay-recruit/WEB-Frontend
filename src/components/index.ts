@@ -6,3 +6,4 @@ export * from './Input';
 export * from './Checkbox';
 export * from './Heart';
 export * from './Topbar';
+export * from './Modal';

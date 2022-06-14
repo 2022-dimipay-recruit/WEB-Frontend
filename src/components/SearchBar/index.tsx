@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Modal } from '@/components';
 import { Wrapper, SearchIcn, Input } from './style';
 
 export const SearchBar: React.FC<{
@@ -10,6 +11,8 @@ export const SearchBar: React.FC<{
   setValue,
   placeholder,
 }) => {
+  const [isFocus, setFocus] = useState<boolean>(false);
+  
   return (
     <Wrapper gap={.6} y='center'>
       <SearchIcn />
@@ -18,7 +21,10 @@ export const SearchBar: React.FC<{
         onChange={({target: {value}}) => setValue(value)}
         value={value}
         placeholder={placeholder}
+        onFocus={setFocus ? () => setFocus(true) : ()=>{}}
+        onBlur={setFocus ? () => setFocus(false) : ()=>{}}
       />
+      <Modal type='search' active={isFocus} />
     </Wrapper>
   );
 };
