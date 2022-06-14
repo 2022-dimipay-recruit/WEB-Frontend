@@ -38,6 +38,9 @@ export const api = async <T extends keyof APIResource>(
       case 'wrong token':
         clearToken();
         break;
+      case 'login fail':
+        makeAlert.error('이메일 또는 비밀번호가 일치하지 않아요');
+        break;
       default:
         toast(errorMessage, {
           type: 'error'

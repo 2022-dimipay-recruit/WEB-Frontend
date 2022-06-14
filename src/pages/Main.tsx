@@ -17,7 +17,7 @@ const Main: React.FC = () => {
       <ContentBox y='space' x='left' gap={3}>
         <Vexile gap={2.4} fillx>
           <Title>더욱 빠르고 쉬운 익명질문, Pasked.</Title>
-          <Content>Packed은 직관적인 모습과 빠른 속도로 더 즐겁게 익명질문을 할 수 있습니다. 또한, 욕설와 비속어로부터 사용자를 보호하여 더 깨끗한 익명질문 문화를 선도하고 있습니다!</Content>
+          <Content>Asked는 이제 안녕~ 이제는 Pasked!</Content>
         </Vexile>
         <Button color='black' onClick={() => history(MyData ? '/myPage' : '/signup')}>시작하기</Button>
       </ContentBox>
