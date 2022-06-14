@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { getAccessToken, refetchToken } from '@/api';
 import { LoadableComponent } from '@loadable/component';
 import { styled } from '#/stitches.config';
 import { Topbar } from '@/components';
+import { useSetRecoilState } from 'recoil';
+import { MyInfoState } from '@/state';
+import { fetchMyData } from '@/api/user';
 
-const checkAuth = (Component: LoadableComponent<{}>) => {
+const checkAuth = async (Component: LoadableComponent<{}>) => {
   try {
     const accessToken = getAccessToken();
     if(!accessToken) throw new Error('Cannot find access token');
-
-    if(!refetchToken()) throw new Error('Cannot login with refresh token');
+    
+    if(!(await refetchToken())) throw new Error('Cannot login with token');
     return <Component />;
   } catch {
     return <Navigate to='/login' />;
@@ -21,10 +24,23 @@ export const Screen: React.FC<{
   Children: LoadableComponent<{}>;
   needAuth?: boolean;
 }> = ({ Children, needAuth=false }) => {
+  const setInfo = useSetRecoilState(MyInfoState);
+  const [Element, setElement] = useState<JSX.Element>();
+
+  useEffect(() => {
+    (async () => {
+      console.log("Aa");
+      setElement(await checkAuth(Children));
+
+      if(!getAccessToken()) return;
+      setInfo(await fetchMyData());
+    })();
+  }, []);
+
   return (
     <Container>
       <Topbar />
-      {needAuth ? checkAuth(Children) : <Children />}
+      {needAuth ? Element : <Children />}
     </Container>
   );
 };

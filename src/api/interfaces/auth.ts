@@ -10,7 +10,7 @@ export interface LoginWithInfo {
   res: AuthTokens;
 };
 
-export interface LoginWithToken {
+export interface LoginWithRefreshToken {
   method: 'POST';
   endpoint: '/auth/refresh';
   req: {};

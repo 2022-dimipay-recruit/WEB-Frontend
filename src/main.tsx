@@ -52,12 +52,12 @@ const Router = () => {
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  <>
     <BrowserRouter>
       <RecoilRoot>
         <Router />
       </RecoilRoot>
     </BrowserRouter>
     <ToastContainer />
-  </React.StrictMode>
+  </>
 );

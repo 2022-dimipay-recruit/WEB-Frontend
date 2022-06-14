@@ -1,7 +1,10 @@
 import { UserInfo } from '@/constants/types';
-import { api } from '.';
+import { api, getAccessToken } from '.';
 
 export const fetchMyData = async (): Promise<UserInfo> => {
-  const res = await api<'myInfo'>('GET', '/user/me');
+  const token = getAccessToken();
+  const res = await api<'myInfo'>('GET', '/user', {}, {
+    Authorization: `Bearer ${token}`,
+  });
   return res;
 };

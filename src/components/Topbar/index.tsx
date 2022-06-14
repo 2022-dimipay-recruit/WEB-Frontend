@@ -19,7 +19,7 @@ export const Topbar: React.FC = () => {
           <NotificationIcn />
         </Hexile>
         <Hexile y='center' filly gap={1}>
-          <ProfileImg src={userData?.profile || '/defaultProfile.jpg'} />
+          <ProfileImg src={`${import.meta.env.VITE_API_URI}${userData?.profile || '/defaultProfile.jpg'}`} />
           <Name>{userData?.name || '로그인'}</Name>
         </Hexile>
       </Hexile>

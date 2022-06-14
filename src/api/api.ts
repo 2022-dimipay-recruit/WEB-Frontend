@@ -1,6 +1,6 @@
 import axios from 'axios';
 import makeAlert from '@/funtions/makeAlert';
-import { APIResource, getAccessToken } from '.';
+import { APIResource, clearToken, getAccessToken } from '.';
 import { toast } from 'react-toastify';
 
 if(!import.meta.env.VITE_API_URI)
@@ -15,7 +15,6 @@ export const api = async <T extends keyof APIResource>(
   endpoint: APIResource[T]['endpoint'] | string,
   param?: APIResource[T]['req'],
   headers?: any,
-  token?: string,
 ): Promise<APIResource[T]['res']> => {
   try {
     const token = getAccessToken();
@@ -35,9 +34,17 @@ export const api = async <T extends keyof APIResource>(
   } catch (error: any) {
     const errorMessage = error.response?.data?.data.message || '서버에 연결할 수 없어요';
 
-    toast(errorMessage, {
-      type: 'error'
-    });
+    switch(errorMessage) {
+      case 'wrong token':
+        clearToken();
+        break;
+      default:
+        toast(errorMessage, {
+          type: 'error'
+        });
+        break;
+    }
+
     throw error;
   }
 };

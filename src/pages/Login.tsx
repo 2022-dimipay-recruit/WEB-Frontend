@@ -4,21 +4,25 @@ import { styled } from '#/stitches.config';
 import { Vexile } from '@haechi/flexile';
 import { loginWithInfo } from '@/api';
 import makeAlert from '@/funtions/makeAlert';
+import { useSetRecoilState } from 'recoil';
+import { MyInfoState } from '@/state';
+import { UserInfo } from '@/constants/types';
 
 const Login: React.FC = () => {
   const history = useNavigate();
+  const setInfo = useSetRecoilState(MyInfoState);
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const login = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      await loginWithInfo({
-        email,
-        password,
-      })
-    ) {
+    const token = await loginWithInfo({
+      email,
+      password,
+    });
+    if (token) {
+      setInfo(token as UserInfo);
       history('/');
     } else {
       makeAlert.error('사용자 이름 또는 비밀번호를 확인해주세요.');

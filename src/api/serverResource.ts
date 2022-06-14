@@ -1,11 +1,11 @@
 import {
   LoginWithInfo,
-  LoginWithToken,
+  LoginWithRefreshToken,
   MyInfo,
 } from './interfaces';
 
 export interface APIResource {
   loginWithInfo: LoginWithInfo;
-  loginWithToken: LoginWithToken;
+  loginWithRefreshToken: LoginWithRefreshToken;
   myInfo: MyInfo;
 };
