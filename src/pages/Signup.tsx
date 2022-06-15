@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { styled } from '#/stitches.config';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { Input, Button, Checkbox } from '@/components';
@@ -10,6 +10,9 @@ const Signup: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [verify, setVerify] = useState<string>('');
+
+  const [imgFile, setFile] = useState<File>();
+  const [preview, setPreview] = useState<string>();
 
   const SignupSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +27,16 @@ const Signup: React.FC = () => {
     password,
     verify,
   ]);
+
+  const ImageChange = (e: React.ChangeEvent<any>) => {
+    const reader = new FileReader();
+    const file = e.target.files[0];
+    reader.onloadend = () => {
+      setFile(file);
+      setPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
     <Wrapper x='center' gap={5.4}>
@@ -60,8 +73,14 @@ const Signup: React.FC = () => {
             </Container>
             <ProfileContainer x='center' gap={1}>
               <ProfileTitle>프로필 사진</ProfileTitle>
-              <ProfileImg />
-              <Button color='black'>업로드</Button>
+              <ProfileImg src={preview} />
+              <InputFile
+                type='file'
+                name='profile'
+                id='profile'
+                accept='image/*'
+                onChange={ImageChange} />
+              <Label htmlFor='profile'>업로드</Label>
             </ProfileContainer>
           </Hexile>
           <PolicyBox y='center' x='space'>
@@ -118,7 +137,7 @@ const ProfileTitle = styled('span', {
   color: '$blackGreen',
   fontWeight: 500,
 });
-const ProfileImg = styled('div', {
+const ProfileImg = styled('img', {
   width: '8.2rem',
   height: '8.2rem',
   borderRadius: '50%',
@@ -139,4 +158,19 @@ const Link = styled('a', {
 });
 const Policy = styled('span', {
   color: '$blackGreen',
+});
+
+const InputFile = styled('input', {
+  display: 'none',
+});
+const Label = styled('label', {
+  borderRadius: '2.6rem',
+  padding: '1rem 2.8rem',
+  cursor: 'pointer',
+  fontSize: '2rem',
+  fontWeight: 700,
+  border: 'none',
+  outline: 'none',
+  background: '$blackGreen',
+  color: '$brightGreen',
 });
