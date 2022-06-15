@@ -2,7 +2,7 @@ import { UserInfoType } from '@/constants/types';
 
 export interface MyInfo {
   method: 'GET';
-  endpoint: '/user';
+  endpoint: '/user/me';
   req: {};
   res: UserInfoType;
 };

@@ -13,8 +13,6 @@ export interface UserInfoType {
   name: string;
   image: string;
   userName: string;
-  facebook: string | null;
-  instagram: string | null;
 };
 
 export type QuestionType = 'anonymous' | 'onymous';

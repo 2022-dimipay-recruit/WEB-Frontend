@@ -28,7 +28,7 @@ export const Wrapper = styled('button', {
         width: '100%',
       },
       false: {
-        width: 'auto',
+        width: 'fit-content',
       }
     },
     responsive: {

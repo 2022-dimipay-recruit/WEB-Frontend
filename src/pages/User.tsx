@@ -5,12 +5,9 @@ import { useRecoilState } from 'recoil';
 import { MyInfoState } from '@/state';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { QuestionType, UserInfoType } from '@/constants/types';
-import { api } from '@/api';
+import { api, clearToken } from '@/api';
 import { makeAlert } from '@/funtions';
 import { Button, Radio, Selection } from '@/components';
-
-import { ReactComponent as InstaIcn } from '@/assets/icons/instagram.svg';
-import { ReactComponent as FacebookIcn } from '@/assets/icons/facebook.svg';
 
 const User: React.FC = () => {
   const history = useNavigate();
@@ -56,50 +53,49 @@ const User: React.FC = () => {
     makeAlert.success('질문을 등록했어요');
   }, [questionContent]);
 
+  const logout = () => {
+    clearToken();
+    setMyInfo(undefined);
+    history('/');
+  };
+
   return (
     <Wrapper x='center' gap={4.8} fillx>
       <ProfileContainer x='center' gap={3.6}>
         <Hexile x='center' y='center' gap={7.5} fillx>
           <Hexile y='center' gap={3.1} linebreak>
-            <ProfileImg
-            src={userInfo
-              ?`${import.meta.env.VITE_API_URI}/assets${userInfo?.image}`
-              : `${import.meta.env.VITE_API_URI}/assets/defaultProfile.jpg`}
-            crossOrigin='anonymous' />
-            <Vexile y='center' gap={2.7} filly>
-              <Vexile gap={1}>
-                <Name>{userInfo?.name} 님</Name>
-                <Hexile gap={2} linebreak>
-                  <Hexile gap={1}>
-                    <InfoTitle>팔로워</InfoTitle>
-                    <InfoNum>9</InfoNum>
-                  </Hexile>
-                  <Hexile gap={1}>
-                    <InfoTitle>답변 질문</InfoTitle>
-                    <InfoNum>{userInfo?.questions.accepted}</InfoNum>
-                  </Hexile>
-                  <Hexile gap={1}>
-                    <InfoTitle>거절 질문</InfoTitle>
-                    <InfoNum>{userInfo?.questions.rejected}</InfoNum>
-                  </Hexile>
-                  <Hexile gap={1}>
-                    <InfoTitle>새 질문</InfoTitle>
-                    <InfoNum>{userInfo?.questions.received}</InfoNum>
-                  </Hexile>
+            <Profile>
+              <ProfileImg
+              src={userInfo
+                ?`${import.meta.env.VITE_API_URI}/assets${userInfo?.image}`
+                : `${import.meta.env.VITE_API_URI}/assets/defaultProfile.jpg`}
+              crossOrigin='anonymous' />
+              <ProfileUpdate x='center' y='center' fillx>수정</ProfileUpdate>
+            </Profile>
+            <Vexile filly>
+              <Name>{userInfo?.name} 님</Name>
+              <Hexile gap={2} linebreak>
+                <Hexile gap={1}>
+                  <InfoTitle>팔로워</InfoTitle>
+                  <InfoNum>9</InfoNum>
                 </Hexile>
-              </Vexile>
-              <SnsBox gap={2} nosns={!userInfo?.facebook && !userInfo?.instagram}>
-                {userInfo?.instagram && (
-                  <Instagram onClick={() => window.open(userInfo.instagram as string, '_blank')} />
-                )}
-                {userInfo?.facebook && (
-                  <Facebook onClick={() => window.open(userInfo.facebook as string, '_blank')} />
-                )}
-              </SnsBox>
+                <Hexile gap={1}>
+                  <InfoTitle>답변 질문</InfoTitle>
+                  <InfoNum>{userInfo?.questions.accepted}</InfoNum>
+                </Hexile>
+                <Hexile gap={1}>
+                  <InfoTitle>거절 질문</InfoTitle>
+                  <InfoNum>{userInfo?.questions.rejected}</InfoNum>
+                </Hexile>
+                <Hexile gap={1}>
+                  <InfoTitle>새 질문</InfoTitle>
+                  <InfoNum>{userInfo?.questions.received}</InfoNum>
+                </Hexile>
+              </Hexile>
             </Vexile>
           </Hexile>
           {isMyPage ? (
-            <Button color='black'>수정</Button>
+            <Button color='black' onClick={logout}>로그아웃</Button>
           ) : (
             <Button color='black'>팔로우</Button>
           )}
@@ -171,10 +167,26 @@ const ProfileContainer = styled(Vexile, {
   }
 });
 
-const ProfileImg = styled('img', {
+const Profile = styled('div', {
   width: '10rem',
   height: '10rem',
   borderRadius: '50%',
+  overflow: 'hidden',
+  position: 'relative',
+});
+const ProfileImg = styled('img', {
+  width: '100%',
+  height: '100%',
+});
+const ProfileUpdate = styled(Hexile, {
+  height: '3.2rem',
+  position: 'absolute',
+  bottom: 0,
+  background: '$blackGreen',
+  fontSize: '1.4rem',
+  color: '$brightGreen',
+  fontWeight: '1.4rem',
+  cursor: 'pointer',
 });
 const Name = styled('span', {
   color: '$blackGreen',
@@ -190,26 +202,6 @@ const InfoNum = styled('span', {
   color: '$blackGreen',
   fontWeight: 700,
   fontSize: '1.4rem',
-});
-
-const SnsBox = styled(Hexile, {
-  variants: {
-    nosns: {
-      true: {
-        display: 'none',
-      },
-    },
-  }
-});
-const Instagram = styled(InstaIcn, {
-  width: '2.4rem',
-  height: '2.4rem',
-  cursor: 'pointer',
-});
-const Facebook = styled(FacebookIcn, {
-  width: '2.4rem',
-  height: '2.4rem',
-  cursor: 'pointer',
 });
 
 const WriteBox = styled(Vexile, {

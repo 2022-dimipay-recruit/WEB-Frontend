@@ -1,4 +1,4 @@
-import { AuthTokens, UserInfo } from '@/constants/types';
+import { AuthTokens, UserInfoType } from '@/constants/types';
 import { APIResource, api } from '.';
 import { cookieJar } from '../storage';
 import sha256 from 'sha256';
@@ -22,7 +22,7 @@ export const clearToken = () => {
 export const loginWithInfo = async ({
   email,
   password
-}: APIResource['loginWithInfo']['req']): Promise<UserInfo | boolean> => {
+}: APIResource['loginWithInfo']['req']): Promise<UserInfoType | boolean> => {
   try {
     const res = await api<'loginWithInfo'>('POST', '/auth/signin', {
       email,

@@ -4,8 +4,12 @@ import { Hexile, Vexile } from '@haechi/flexile';
 import { Input, Button, Checkbox } from '@/components';
 import { makeAlert } from '@/funtions';
 import { clearToken } from '@/api';
+import { useSetRecoilState } from 'recoil';
+import { MyInfoState } from '@/state';
 
 const Signup: React.FC = () => {
+  const setInfo = useSetRecoilState(MyInfoState);
+
   const [name, setName] = useState<string>('');
   const [userName, setUserName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -17,6 +21,7 @@ const Signup: React.FC = () => {
 
   useEffect(() => {
     clearToken();
+    setInfo(undefined);
   }, []);
 
   const SignupSubmit = useCallback((e: React.FormEvent) => {

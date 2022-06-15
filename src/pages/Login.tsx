@@ -20,6 +20,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     clearToken();
+    setInfo(undefined);
   }, []);
 
   const login = useCallback(async (e: React.FormEvent) => {
@@ -33,14 +34,14 @@ const Login: React.FC = () => {
     });
     if (token) {
       setInfo(token as UserInfoType);
-      history(`/${token.userName}`);
+      history(`/${(token as UserInfoType).userName}`);
     }
   }, [email, password]);
 
   return (
     <Wrapper x='center' gap={5.2}>
       <Vexile x='center' gap={4} fillx>
-        <Logo />
+        <Logo onClick={() => history('/')} />
         <Title>환영합니다!</Title>
       </Vexile>
       <Form onSubmit={login}>
@@ -82,8 +83,8 @@ const Wrapper = styled(Vexile, {
   }
 });
 const Logo = styled(LogoIcn, {
-  width: '16rem',
-  height: '16rem',
+  width: '27rem',
+  cursor: 'pointer',
 });
 const Title = styled('span', {
   color: '$blackGreen',
