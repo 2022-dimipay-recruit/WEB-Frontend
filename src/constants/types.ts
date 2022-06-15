@@ -3,7 +3,7 @@ export interface AuthTokens {
   refreshToken: string;
 };
 
-export interface UserInfo {
+export interface UserInfoType {
   questions: {
     received: number;
     accepted: number;
@@ -11,6 +11,10 @@ export interface UserInfo {
   };
   email: string;
   name: string;
-  profile: string;
+  image: string;
   userName: string;
+  facebook: string | null;
+  instagram: string | null;
 };
+
+export type QuestionType = 'anonymous' | 'onymous';

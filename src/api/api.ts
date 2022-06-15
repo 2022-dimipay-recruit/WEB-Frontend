@@ -41,6 +41,9 @@ export const api = async <T extends keyof APIResource>(
       case 'login fail':
         makeAlert.error('이메일 또는 비밀번호가 일치하지 않아요');
         break;
+      case 'user not found':
+        makeAlert.error('유저를 찾을 수 없어요');
+        break;
       default:
         toast(errorMessage, {
           type: 'error'

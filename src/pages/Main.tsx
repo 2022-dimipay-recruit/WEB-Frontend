@@ -19,7 +19,7 @@ const Main: React.FC = () => {
           <Title>더욱 빠르고 쉬운 익명질문, Pasked.</Title>
           <Content>Asked는 이제 안녕~ 이제는 Pasked!</Content>
         </Vexile>
-        <Button color='black' onClick={() => history(MyData ? '/myPage' : '/signup')}>시작하기</Button>
+        <Button color='black' onClick={() => history(MyData ? `/${MyData.userName}` : '/signup')}>시작하기</Button>
       </ContentBox>
       <IntroBox gap={3.3}>
         <IntroIcn src={Intro1} />

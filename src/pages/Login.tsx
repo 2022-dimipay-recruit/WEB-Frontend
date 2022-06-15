@@ -1,12 +1,12 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '#/stitches.config';
 import { Vexile } from '@haechi/flexile';
-import { loginWithInfo } from '@/api';
+import { clearToken, loginWithInfo } from '@/api';
 import { makeAlert } from '@/funtions';
 import { useSetRecoilState } from 'recoil';
 import { MyInfoState } from '@/state';
-import { UserInfo } from '@/constants/types';
+import { UserInfoType } from '@/constants/types';
 import { Button, Input } from '@/components';
 
 import { ReactComponent as LogoIcn } from '@/assets/icons/logo.svg';
@@ -18,6 +18,10 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  useEffect(() => {
+    clearToken();
+  }, []);
+
   const login = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -28,8 +32,8 @@ const Login: React.FC = () => {
       password,
     });
     if (token) {
-      setInfo(token as UserInfo);
-      history('/');
+      setInfo(token as UserInfoType);
+      history(`/${token.userName}`);
     }
   }, [email, password]);
 

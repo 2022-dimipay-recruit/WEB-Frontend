@@ -38,8 +38,8 @@ export const Topbar: React.FC = () => {
                 <NotificationIcn onClick={() => setNotifiFocus(true)} />
               )}
             </IcnBox>
-            <ProfileBox y='center' filly gap={1}>
-              <ProfileImg src={`${import.meta.env.VITE_API_URI}/assets${userData?.profile || '/defaultProfile.jpg'}`} crossOrigin="anonymous" />
+            <ProfileBox y='center' filly gap={1} onClick={() => history(`/${userData.userName}`)}>
+              <ProfileImg src={`${import.meta.env.VITE_API_URI}/assets${userData?.image || '/defaultProfile.jpg'}`} crossOrigin="anonymous" />
               <Name>{userData?.name}</Name>
             </ProfileBox>
           </ProfileContainer>

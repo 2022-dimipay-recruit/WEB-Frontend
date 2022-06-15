@@ -3,6 +3,7 @@ import { styled } from '#/stitches.config';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { Input, Button, Checkbox } from '@/components';
 import { makeAlert } from '@/funtions';
+import { clearToken } from '@/api';
 
 const Signup: React.FC = () => {
   const [name, setName] = useState<string>('');
@@ -14,10 +15,15 @@ const Signup: React.FC = () => {
   const [imgFile, setFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
 
+  useEffect(() => {
+    clearToken();
+  }, []);
+
   const SignupSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
 
     if(!name || !userName || !email || !password || !verify) return makeAlert.error('필드를 확인해주세요');
+    if(userName.length > 10) return makeAlert.error('아이디는 10자 이내로 해주세요');
     if(!(password === verify)) return makeAlert.error('비밀번호를 확인해주세요');
     if(!(e.target as any).policyAllow.checked) return makeAlert.error('개인정보 처리방침에 동의해주세요');
   }, [

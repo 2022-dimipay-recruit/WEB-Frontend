@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
-import { UserInfo } from '@/constants/types';
+import { UserInfoType } from '@/constants/types';
 
-export default atom<UserInfo | undefined>({
+export default atom<UserInfoType | undefined>({
   key: 'MyInfo',
   default: undefined
 });

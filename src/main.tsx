@@ -11,6 +11,7 @@ import {
   Login,
   Components,
   Signup,
+  User,
 } from '@/pages';
 import { Screen, ExceptionPage } from '@/funtions';
 import { RecoilRoot } from 'recoil';
@@ -49,6 +50,7 @@ const Router = () => {
       <Route path='/login' element={<ExceptionPage Children={Login} />} />
       <Route path='/signup' element={<ExceptionPage Children={Signup} />} />
       <Route path='/components' element={<Components />} />
+      <Route path='/:username' element={<Screen Children={User} />} />
     </Routes>
   );
 }

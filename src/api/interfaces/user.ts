@@ -1,8 +1,14 @@
-import { UserInfo } from '@/constants/types';
+import { UserInfoType } from '@/constants/types';
 
 export interface MyInfo {
   method: 'GET';
-  endpoint: '/auth/me';
+  endpoint: '/user';
   req: {};
-  res: UserInfo;
+  res: UserInfoType;
+};
+export interface UserInfo {
+  method: 'GET';
+  endpoint: '/user/:name';
+  req: {};
+  res: UserInfoType;
 };
