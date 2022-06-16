@@ -3,10 +3,25 @@ import { Wrapper } from './style';
 
 export const Button: React.FC<{
   large?: boolean;
-  type: 'black' | 'bright' | 'deep';
+  color: 'black' | 'bright' | 'deep';
+  type?: 'button' | 'submit';
   children: string;
-}> = ({large = false, type, children}) => {
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  responsive?: boolean;
+}> = ({
+  large = false,
+  color,
+  type = 'button',
+  children,
+  onClick,
+  responsive = false,
+}) => {
   return (
-    <Wrapper type={type} fillx={large} x='center' y='center'>{children}</Wrapper>
+    <Wrapper
+    color={color}
+    large={large}
+    onClick={onClick}
+    type={type}
+    responsive={responsive}>{children}</Wrapper>
   );
 };

@@ -7,16 +7,24 @@ export const Radio: React.FC<{
   id: string;
   name: string;
   check?: boolean;
+  onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
 }> = ({
   value,
   label,
   id,
   name,
-  check=false
+  check=false,
+  onChange
 }) => {
   return (
     <Wrapper y='center'>
-      <RadioBtn type='radio' value={value} id={id} name={name} defaultChecked={check} />
+      <RadioBtn
+      type='radio'
+      value={value}
+      id={id}
+      name={name}
+      defaultChecked={check}
+      onChange={onChange} />
       <Label htmlFor={id}>{label}</Label>
     </Wrapper>
   );

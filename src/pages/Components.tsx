@@ -17,12 +17,12 @@ const Components: React.FC = () => {
 
   return (
     <Wrapper x='center' y='space'>
-      <Button type='black'>Black Button</Button>
-      <Button type='bright'>Bright Button</Button>
-      <Button type='deep'>Deep Button</Button>
-      <Button type='black' large>Black Large Button</Button>
-      <Button type='bright' large>Bright Large Button</Button>
-      <Button type='deep' large>Deep Large Button</Button>
+      <Button color='black'>Black Button</Button>
+      <Button color='bright'>Bright Button</Button>
+      <Button color='deep'>Deep Button</Button>
+      <Button color='black' large>Black Large Button</Button>
+      <Button color='bright' large>Bright Large Button</Button>
+      <Button color='deep' large>Deep Large Button</Button>
       <Radio value='test' label='content' id='test' name='radio' check />
       <Radio value='test1' label='content1' id='test1' name='radio' />
       <Hexile x='space' fillx>

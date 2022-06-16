@@ -31,8 +31,8 @@ export const {
     })
   },
   media: {
-    mobile: '(min-width: 640px)',
-    pad: '(min-width: 768px)',
-    desktop: '(min-width: 1024px)',
+    mobile: '(max-width: 600px)',
+    pad: '(min-width: 601px) and (max-width: 992px)',
+    desktop: '(min-width: 993px)',
   },
 });

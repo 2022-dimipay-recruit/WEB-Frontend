@@ -4,9 +4,10 @@ import { ReactComponent as Search } from '@/assets/icons/search.svg';
 
 export const Wrapper = styled(Hexile, {
   padding: '.6rem 1rem',
-  width: '75%',
+  width: '65%',
   background: '$brightGreen',
   borderRadius: '2rem',
+  position: 'relative',
 });
 export const SearchIcn = styled(Search, {
   width: '1.5rem',

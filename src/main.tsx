@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   BrowserRouter,
@@ -7,11 +7,19 @@ import {
 } from 'react-router-dom';
 import { globalCss } from '#/stitches.config';
 import {
+  Main,
   Login,
-  Components
+  Components,
+  Signup,
+  User,
 } from '@/pages';
+import { Screen, ExceptionPage } from '@/funtions';
+import { RecoilRoot } from 'recoil';
 
 import '@/assets/Pretendard/index.css';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.min.css';
 
 globalCss({
   ':root': {
@@ -37,17 +45,25 @@ globalCss({
 
 const Router = () => {
   return (
-    <Routes>
-      <Route path='/login' element={<Login />} />
-      <Route path='/components' element={<Components />} />
-    </Routes>
+    <Suspense fallback={<h1>로딩중</h1>}>
+      <Routes>
+        <Route path='/' element={<Screen Children={Main} />} />
+        <Route path='/login' element={<ExceptionPage Children={Login} />} />
+        <Route path='/signup' element={<ExceptionPage Children={Signup} />} />
+        <Route path='/components' element={<Components />} />
+        <Route path='/:username' element={<Screen Children={User} />} />
+      </Routes>
+    </Suspense>
   );
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  <>
     <BrowserRouter>
-      <Router />
+      <RecoilRoot>
+        <Router />
+      </RecoilRoot>
     </BrowserRouter>
-  </React.StrictMode>
+    <ToastContainer />
+  </>
 );

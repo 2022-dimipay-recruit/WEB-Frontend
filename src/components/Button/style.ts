@@ -1,14 +1,15 @@
 import { styled } from '#/stitches.config';
-import { Hexile } from '@haechi/flexile';
 
-export const Wrapper = styled(Hexile, {
+export const Wrapper = styled('button', {
   borderRadius: '2.6rem',
   padding: '1rem 2.8rem',
   cursor: 'pointer',
   fontSize: '2rem',
   fontWeight: 700,
+  border: 'none',
+  outline: 'none',
   variants: {
-    type: {
+    color: {
       'black': {
         background: '$blackGreen',
         color: '$brightGreen',
@@ -27,7 +28,15 @@ export const Wrapper = styled(Hexile, {
         width: '100%',
       },
       false: {
-        width: 'auto',
+        width: 'fit-content',
+      }
+    },
+    responsive: {
+      true: {
+        '@mobile': {
+          padding: '.8rem 2rem',
+          fontSize: '1.6rem',
+        }
       }
     }
   }
