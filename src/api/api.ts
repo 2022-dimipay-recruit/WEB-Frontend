@@ -4,7 +4,7 @@ import { APIResource, clearToken, getAccessToken } from '.';
 import { toast } from 'react-toastify';
 
 if(!import.meta.env.VITE_API_URI)
-  makeAlert.error('서버 정보를 불러오는데 실패했습니다.');
+  makeAlert.error('서버 정보를 불러오는데 실패했어요');
 
 export const request = axios.create({
   baseURL: import.meta.env.VITE_API_URI,
@@ -43,6 +43,9 @@ export const api = async <T extends keyof APIResource>(
         break;
       case 'user not found':
         makeAlert.error('유저를 찾을 수 없어요');
+        break;
+      case 'bad request':
+        makeAlert.error('요청이 잘못되었어요');
         break;
       default:
         toast(errorMessage, {

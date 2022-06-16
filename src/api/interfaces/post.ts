@@ -1,4 +1,4 @@
-import { QuestionType } from '@/constants/types';
+import { QuestionStatus, QuestionType } from '@/constants/types';
 
 export interface QuestionRegi {
   method: 'POST';
@@ -11,4 +11,15 @@ export interface QuestionRegi {
   res: {
     id: number;
   };
+};
+
+export interface QuestionAnswer {
+  method: 'POST';
+  endpoint: '/post/answer';
+  req: {
+    questionId: string,
+    post?: string,
+    status: QuestionStatus;
+  };
+  res: {};
 };

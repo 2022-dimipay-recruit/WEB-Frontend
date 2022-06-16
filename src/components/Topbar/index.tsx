@@ -15,6 +15,7 @@ import { SearchBar, Button, Modal } from '@/components';
 import { useRecoilValue } from 'recoil';
 import { MyInfoState } from '@/state';
 import { useNavigate } from 'react-router-dom';
+import { config, defaultProfile } from '@/constants/types';
 
 export const Topbar: React.FC = () => {
   const userData = useRecoilValue(MyInfoState);
@@ -39,7 +40,7 @@ export const Topbar: React.FC = () => {
               )}
             </IcnBox>
             <ProfileBox y='center' filly gap={1} onClick={() => history(`/${userData.userName}`)}>
-              <ProfileImg src={`${import.meta.env.VITE_API_URI}/assets${userData?.image || '/defaultProfile.jpg'}`} crossOrigin="anonymous" />
+              <ProfileImg src={userData ? (userData.image === config.defaultProfile ? defaultProfile : userData.image) : defaultProfile} crossOrigin='anonymous' />
               <Name>{userData?.name}</Name>
             </ProfileBox>
           </ProfileContainer>
@@ -47,7 +48,7 @@ export const Topbar: React.FC = () => {
           <Button color='black' onClick={() => history('/login')} responsive>로그인</Button>
         )
       }
-      <Modal type='notification' active={notifiFocus} />
+      <Modal type='notification' active={notifiFocus} content={content} />
     </Wrapper>
   );
 };

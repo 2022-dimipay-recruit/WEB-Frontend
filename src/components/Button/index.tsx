@@ -17,6 +17,11 @@ export const Button: React.FC<{
   responsive = false,
 }) => {
   return (
-    <Wrapper color={color} large={large} onClick={onClick} type={type} responsive={responsive}>{children}</Wrapper>
+    <Wrapper
+    color={color}
+    large={large}
+    onClick={onClick}
+    type={type}
+    responsive={responsive}>{children}</Wrapper>
   );
 };

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { getAccessToken, refetchToken } from '@/api';
 import { LoadableComponent } from '@loadable/component';
 import { styled } from '#/stitches.config';
 import { Topbar } from '@/components';
 import { useSetRecoilState } from 'recoil';
-import { MyInfoState } from '@/state';
+import { MyInfoState, UserParamState } from '@/state';
 import { fetchMyData } from '@/api/user';
 
 const checkAuth = async (Component: LoadableComponent<{}>) => {
@@ -25,7 +25,10 @@ export const Screen: React.FC<{
   needAuth?: boolean;
 }> = ({ Children, needAuth=false }) => {
   const setInfo = useSetRecoilState(MyInfoState);
+  const setUserParam = useSetRecoilState(UserParamState);
   const [Element, setElement] = useState<JSX.Element>();
+
+  const { username } = useParams();
 
   useEffect(() => {
     (async () => {
@@ -35,6 +38,10 @@ export const Screen: React.FC<{
       setInfo(await fetchMyData());
     })();
   }, []);
+  useEffect(() => {
+    if(!username) return;
+    setUserParam(username); 
+  }, [username]);
 
   return (
     <Container>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   BrowserRouter,
@@ -45,13 +45,15 @@ globalCss({
 
 const Router = () => {
   return (
-    <Routes>
-      <Route path='/' element={<Screen Children={Main} />} />
-      <Route path='/login' element={<ExceptionPage Children={Login} />} />
-      <Route path='/signup' element={<ExceptionPage Children={Signup} />} />
-      <Route path='/components' element={<Components />} />
-      <Route path='/:username' element={<Screen Children={User} />} />
-    </Routes>
+    <Suspense fallback={<h1>로딩중</h1>}>
+      <Routes>
+        <Route path='/' element={<Screen Children={Main} />} />
+        <Route path='/login' element={<ExceptionPage Children={Login} />} />
+        <Route path='/signup' element={<ExceptionPage Children={Signup} />} />
+        <Route path='/components' element={<Components />} />
+        <Route path='/:username' element={<Screen Children={User} />} />
+      </Routes>
+    </Suspense>
   );
 }
 

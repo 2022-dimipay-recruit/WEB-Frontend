@@ -19,3 +19,18 @@ export const Answer = styled('span', {
   fontWeight: 700,
   fontSize: '2rem',
 });
+export const Textarea = styled('textarea', {
+  padding: '1.8rem',
+  outline: 'none',
+  border: 'none',
+  borderRadius: '1.6rem',
+  width: '100%',
+  background: '$brightGreen',
+  resize: 'none',
+  color: '$blackGreen',
+  '&::placeholder': {
+    fontSize: '1.4rem',
+    fontWeight: 500,
+    color: '$darkGreen',
+  }
+});

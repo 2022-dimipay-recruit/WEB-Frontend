@@ -1,63 +1,78 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { styled } from '#/stitches.config';
-import { useRecoilState } from 'recoil';
-import { MyInfoState } from '@/state';
+import { useRecoilState, useRecoilValue, useRecoilRefresher_UNSTABLE } from 'recoil';
+import { FetchUserData, MyInfoState, UserParamState } from '@/state';
 import { Hexile, Vexile } from '@haechi/flexile';
-import { QuestionType, UserInfoType } from '@/constants/types';
+import { PageType, QuestionType } from '@/constants/types';
 import { api, clearToken } from '@/api';
 import { makeAlert } from '@/funtions';
-import { Button, Radio, Selection } from '@/components';
+import { Button, Radio, ReceivedQ, Selection } from '@/components';
+import { config, defaultProfile } from '@/constants/types';
 
 const User: React.FC = () => {
   const history = useNavigate();
-  const { username } = useParams();
   const [myInfo, setMyInfo] = useRecoilState(MyInfoState);
+  const username = useRecoilValue(UserParamState);
+  const userData = useRecoilValue(FetchUserData(username));
+  const refetchUserData = useRecoilRefresher_UNSTABLE(FetchUserData(username));
   const [isMyPage, setIsMyPage] = useState<boolean>(username == myInfo?.userName);
-  const [userInfo, setUserInfo] = useState<UserInfoType>();
+
+  const [page, setPage] = useState<PageType>('acceptdQ');
 
   const [questionContent, setQuestionContent] = useState<string>('');
-
-  const fetchUserData = async () => {
-    try {
-      const res = await api<'userInfo'>('GET', `/user/${username}`);
-      setUserInfo(res);
-    } catch {
-      if(!myInfo) history(`/`);
-      else history(`/${myInfo?.userName}`);
-    }
-  };
+  const [questionType, setQuestionType] = useState<QuestionType>('anonymous');
 
   useEffect(() => {
+    setPage('acceptdQ');
+  }, []);
+  useEffect(() => {
+    if(!userData) return history(`/${myInfo?.userName}`);
     setIsMyPage(username == myInfo?.userName);
-    (async () => {
-      await fetchUserData()
-    })();
-  }, [username, myInfo]);
+  }, [myInfo, userData]);
 
-  const questionRegistration = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const questionRegistration = useCallback(async () => {
     if(
       !(questionContent.length >= 2 && questionContent.length <= 300)
     ) return makeAlert.error('질문은 2자 이상 300자 이내로 작성해주세요');
 
     await api<'questionRegi'>('POST', '/post/question', {
-      receiver: userInfo?.userName as string,
+      receiver: userData?.userName as string,
       post: questionContent,
-      type: (e.target as any).type.value,
+      type: questionType,
     });
 
-    await fetchUserData();
+    refetchUserData();
     setQuestionContent('');
     makeAlert.success('질문을 등록했어요');
-  }, [questionContent]);
+  }, [questionContent, questionType]);
+
+  const QRegiSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    await questionRegistration();
+  };
 
   const logout = () => {
     clearToken();
     setMyInfo(undefined);
     history('/');
   };
+
+  const textareaHandler = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if(e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault();
+      await questionRegistration();
+    }
+  };
+  
+  const changePage = useCallback((pageType: PageType) => {
+    if(pageType !== 'acceptdQ') {
+      if(!myInfo) return makeAlert.error('로그인해주세요\n* 자기질문만 확인할 수 있어요');
+      else if(!isMyPage) return makeAlert.error('자기질문만 확인할 수 있어요');
+    }
+    setPage(pageType);
+  }, [myInfo, isMyPage]);
 
   return (
     <Wrapper x='center' gap={4.8} fillx>
@@ -66,14 +81,16 @@ const User: React.FC = () => {
           <Hexile y='center' gap={3.1} linebreak>
             <Profile>
               <ProfileImg
-              src={userInfo
-                ?`${import.meta.env.VITE_API_URI}/assets${userInfo?.image}`
-                : `${import.meta.env.VITE_API_URI}/assets/defaultProfile.jpg`}
+              src={userData
+                ? userData.image === config.defaultProfile ? defaultProfile : userData.image
+                : defaultProfile}
               crossOrigin='anonymous' />
-              <ProfileUpdate x='center' y='center' fillx>수정</ProfileUpdate>
+              {isMyPage && (
+                <ProfileUpdate x='center' y='center' fillx>수정</ProfileUpdate>
+              )}
             </Profile>
             <Vexile filly>
-              <Name>{userInfo?.name} 님</Name>
+              <Name>{userData?.name} 님</Name>
               <Hexile gap={2} linebreak>
                 <Hexile gap={1}>
                   <InfoTitle>팔로워</InfoTitle>
@@ -81,15 +98,15 @@ const User: React.FC = () => {
                 </Hexile>
                 <Hexile gap={1}>
                   <InfoTitle>답변 질문</InfoTitle>
-                  <InfoNum>{userInfo?.questions.accepted}</InfoNum>
+                  <InfoNum>{userData?.questions.accepted}</InfoNum>
                 </Hexile>
                 <Hexile gap={1}>
                   <InfoTitle>거절 질문</InfoTitle>
-                  <InfoNum>{userInfo?.questions.rejected}</InfoNum>
+                  <InfoNum>{userData?.questions.rejected}</InfoNum>
                 </Hexile>
                 <Hexile gap={1}>
                   <InfoTitle>새 질문</InfoTitle>
-                  <InfoNum>{userInfo?.questions.received}</InfoNum>
+                  <InfoNum>{userData?.questions.received}</InfoNum>
                 </Hexile>
               </Hexile>
             </Vexile>
@@ -102,7 +119,7 @@ const User: React.FC = () => {
         </Hexile>
         <WriteBox mypage={isMyPage} gap={1.3}>
           <WriteTitle>질문 작성</WriteTitle>
-          <WriteForm onSubmit={questionRegistration}>
+          <WriteForm onSubmit={QRegiSubmit}>
             <Hexile gap={4.4} fillx linebreak>
               <WriteTextArea
               maxLength={300}
@@ -110,6 +127,7 @@ const User: React.FC = () => {
               rows={5}
               placeholder='건전한 인터넷 문화를 위해 에티켓을 지켜주세요!'
               value={questionContent}
+              onKeyDown={textareaHandler}
               onChange={({target: {value}}) => setQuestionContent(value)}></WriteTextArea>
               <Vexile gap={2.4} filly>
                 <Vexile x='center' gap={1.8} fillx>
@@ -118,11 +136,13 @@ const User: React.FC = () => {
                   name='type'
                   label='익명'
                   value='anonymous'
+                  onChange={({target: {value}}) => setQuestionType(value as QuestionType)}
                   check />
                   <Radio
                   id='onymous'
                   name='type'
                   label='공개'
+                  onChange={({target: {value}}) => setQuestionType(value as QuestionType)}
                   value='onymous' />
                 </Vexile>
                 <Button color='black' type='submit'>작성</Button>
@@ -133,13 +153,15 @@ const User: React.FC = () => {
       </ProfileContainer>
       <Vexile gap={3.6} fillx>
         <Hexile fillx>
-          <Selection active>답변한 질문</Selection>
-          <Selection>보낸 질문</Selection>
-          <Selection>거절 질문</Selection>
-          <Selection>새 질문</Selection>
+          <Selection active={page === 'acceptdQ'} onClick={() => changePage('acceptdQ')}>답변한 질문</Selection>
+          <Selection active={page === 'sendQ'} onClick={() => changePage('sendQ')}>보낸 질문</Selection>
+          <Selection active={page === 'rejectedQ'} onClick={() => changePage('rejectedQ')}>거절 질문</Selection>
+          <Selection active={page === 'receivedQ'} onClick={() => changePage('receivedQ')}>새 질문</Selection>
         </Hexile>
-        <QuestionContainer gap={3.6} fillx>
-
+        <QuestionContainer>
+          {page === 'receivedQ' && (
+            <ReceivedQ />
+          )}
         </QuestionContainer>
       </Vexile>
     </Wrapper>
@@ -229,13 +251,15 @@ const WriteTextArea = styled('textarea', {
   width: '50rem',
   background: '$brightGreen',
   resize: 'none',
+  color: '$blackGreen',
   '&::placeholder': {
     fontSize: '1.4rem',
     fontWeight: 500,
-    color: '$darkGreen'
+    color: '$darkGreen',
   }
 });
 
-const QuestionContainer = styled(Vexile, {
-  padding: '2.4rem',
+const QuestionContainer = styled('div', {
+  padding: '0 2.4rem',
+  width: '100%',
 });

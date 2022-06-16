@@ -24,7 +24,7 @@ export const SearchBar: React.FC<{
         onFocus={setFocus ? () => setFocus(true) : ()=>{}}
         onBlur={setFocus ? () => setFocus(false) : ()=>{}}
       />
-      <Modal type='search' active={isFocus} />
+      <Modal type='search' active={isFocus} content={value} />
     </Wrapper>
   );
 };
