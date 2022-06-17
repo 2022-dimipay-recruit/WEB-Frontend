@@ -23,3 +23,12 @@ export interface QuestionAnswer {
   };
   res: {};
 };
+
+export interface QuestionLike {
+  method: 'POST';
+  endpoint: '/post/like';
+  req: {
+    questionId: string;
+  };
+  res: {};
+};

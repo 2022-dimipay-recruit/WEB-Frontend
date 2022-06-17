@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '#/stitches.config';
-import { useRecoilState, useRecoilValue, useRecoilRefresher_UNSTABLE } from 'recoil';
-import { FetchUserData, MyInfoState, UserParamState } from '@/state';
+import { useRecoilState, useRecoilValue, useRecoilRefresher_UNSTABLE, useSetRecoilState } from 'recoil';
+import { FetchUserData, FollowerListState, MyInfoState, UserParamState } from '@/state';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { PageType, QuestionType } from '@/constants/types';
 import { api, clearToken } from '@/api';
 import { makeAlert } from '@/funtions';
-import { Button, Radio, ReceivedQ, Selection } from '@/components';
+import { AcceptedQ, Button, Radio, ReceivedQ, RejectedQ, Selection } from '@/components';
 import { config, defaultProfile } from '@/constants/types';
 
 const User: React.FC = () => {
@@ -15,6 +15,7 @@ const User: React.FC = () => {
   const [myInfo, setMyInfo] = useRecoilState(MyInfoState);
   const username = useRecoilValue(UserParamState);
   const userData = useRecoilValue(FetchUserData(username));
+  const [followingList, setFollowingList ]= useRecoilState(FollowerListState);
   const refetchUserData = useRecoilRefresher_UNSTABLE(FetchUserData(username));
   const [isMyPage, setIsMyPage] = useState<boolean>(username == myInfo?.userName);
 
@@ -23,13 +24,26 @@ const User: React.FC = () => {
   const [questionContent, setQuestionContent] = useState<string>('');
   const [questionType, setQuestionType] = useState<QuestionType>('anonymous');
 
+  const refetchFollowingList = useCallback(async () => {
+    const res = await api<'getFollowList'>('GET', `/user/follow/list?type=following&name=${myInfo?.userName}`);
+    setFollowingList(res.list);
+  }, [myInfo]);
+
   useEffect(() => {
     setPage('acceptdQ');
   }, []);
   useEffect(() => {
     if(!userData) return history(`/${myInfo?.userName}`);
     setIsMyPage(username == myInfo?.userName);
+
+
+    (async () => {
+      await refetchFollowingList();
+    })();
   }, [myInfo, userData]);
+  useEffect(() => {
+    setPage('acceptdQ');
+  }, [username]);
 
   const questionRegistration = useCallback(async () => {
     if(
@@ -50,6 +64,8 @@ const User: React.FC = () => {
   const QRegiSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if(questionType === 'onymous' && !myInfo) return makeAlert.error('공개 질문은 로그인 후에 질문 가능해요');
+
     await questionRegistration();
   };
 
@@ -68,11 +84,30 @@ const User: React.FC = () => {
   
   const changePage = useCallback((pageType: PageType) => {
     if(pageType !== 'acceptdQ') {
-      if(!myInfo) return makeAlert.error('로그인해주세요\n* 자기질문만 확인할 수 있어요');
+      if(!myInfo) return makeAlert.error(<p>로그인해주세요<br/>* 자기질문만 확인할 수 있어요</p>);
       else if(!isMyPage) return makeAlert.error('자기질문만 확인할 수 있어요');
     }
     setPage(pageType);
   }, [myInfo, isMyPage]);
+
+  const questionTypeCheck = useCallback((e: React.ChangeEvent<HTMLInputElement> | undefined) => {
+    if(e) {
+      if(e.target.value === 'onymous' && !myInfo) {
+        e.preventDefault();
+        return makeAlert.error('공개 질문은 로그인 후에 질문 가능해요');
+      }
+      else setQuestionType(e.target.value as QuestionType);
+    }
+  }, [myInfo]);
+
+  const follow = useCallback(async () => {
+    if(!userData) return;
+    await api<'follow'>('POST', '/user/follow', {
+      followName: userData.userName as string,
+    });
+    await refetchFollowingList();
+    refetchUserData();
+  }, [userData]);
 
   return (
     <Wrapper x='center' gap={4.8} fillx>
@@ -94,7 +129,7 @@ const User: React.FC = () => {
               <Hexile gap={2} linebreak>
                 <Hexile gap={1}>
                   <InfoTitle>팔로워</InfoTitle>
-                  <InfoNum>9</InfoNum>
+                  <InfoNum>{userData?.follower}</InfoNum>
                 </Hexile>
                 <Hexile gap={1}>
                   <InfoTitle>답변 질문</InfoTitle>
@@ -114,7 +149,8 @@ const User: React.FC = () => {
           {isMyPage ? (
             <Button color='black' onClick={logout}>로그아웃</Button>
           ) : (
-            <Button color='black'>팔로우</Button>
+            <Button color={followingList.includes(userData?.userName as string) ? 'bright' : 'black'}
+            onClick={follow}>{followingList.includes(userData?.userName as string) ? '언팔로우' : '팔로우'}</Button>
           )}
         </Hexile>
         <WriteBox mypage={isMyPage} gap={1.3}>
@@ -142,7 +178,7 @@ const User: React.FC = () => {
                   id='onymous'
                   name='type'
                   label='공개'
-                  onChange={({target: {value}}) => setQuestionType(value as QuestionType)}
+                  onChange={questionTypeCheck}
                   value='onymous' />
                 </Vexile>
                 <Button color='black' type='submit'>작성</Button>
@@ -159,6 +195,12 @@ const User: React.FC = () => {
           <Selection active={page === 'receivedQ'} onClick={() => changePage('receivedQ')}>새 질문</Selection>
         </Hexile>
         <QuestionContainer>
+          {page === 'acceptdQ' && (
+            <AcceptedQ mypage={isMyPage} />
+          )}
+          {page === 'rejectedQ' && (
+            <RejectedQ />
+          )}
           {page === 'receivedQ' && (
             <ReceivedQ />
           )}

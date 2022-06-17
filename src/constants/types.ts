@@ -12,6 +12,8 @@ export interface UserInfoType {
   name: string;
   image: string;
   userName: string;
+  following: number;
+  follower: number;
 };
 export interface FindUser {
   id: string;

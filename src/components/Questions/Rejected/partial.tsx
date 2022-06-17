@@ -22,7 +22,7 @@ export const QCard: React.FC<{
     
     await api<'questionAnswer'>('POST', '/post/answer', {
       questionId: question.id,
-      post: status === 'accepted' ? content : '답변 거부함',
+      post: status === 'accepted' ? content : '질문 삭제함',
       status,
     });
     makeAlert.success('질문에 답장했어요');
@@ -30,11 +30,6 @@ export const QCard: React.FC<{
     await fetchData(true);
     refetchUserData();
   }, [content]);
-
-  const answerSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    answer('accepted');
-  };
   
   const textareaHandler = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if(e.keyCode === 13 && !e.shiftKey) {
@@ -44,7 +39,7 @@ export const QCard: React.FC<{
   };
 
   return (
-    <Form onSubmit={answerSubmit}>
+    <Form>
       <Hexile x='space' y='center' fillx>
         <ContentBox x='left' y='space' gap={2.4}>
           <Vexile x='left' gap={.6}>
@@ -59,7 +54,7 @@ export const QCard: React.FC<{
           placeholder='건전한 인터넷 문화를 위해 에티켓을 지켜주세요!'></Textarea>
         </ContentBox>
         <Vexile x='center' gap={1}>
-          <Button color='black' onClick={() => answer('rejected')}>거절하기</Button>
+          <Button color='black'>삭제하기</Button>
           <Button color='black' type='submit'>답장하기</Button>
         </Vexile>
       </Hexile>

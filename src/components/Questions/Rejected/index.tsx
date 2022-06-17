@@ -2,23 +2,24 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Vexile } from '@haechi/flexile';
 import { api } from '@/api';
 import { useRecoilValue } from 'recoil';
-import { UserParamState } from '@/state';
+import { MyInfoState } from '@/state';
 import { Question } from '@/constants/types';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import { QCard } from './partial';
 
-export const AcceptedQ: React.FC<{
-  mypage: boolean;
-}> = ({ mypage }) => {
-  const username = useRecoilValue(UserParamState);
-
+export const RejectedQ: React.FC = () => {
+  const myInfo = useRecoilValue(MyInfoState);
+  const [questions, setQuestions] = useState<Array<Question>>([]);
   const [nowPage, setNowPage] = useState<number>(1);
   const [maxPage, setMaxPage] = useState<number>(1);
-  const [questions, setQuestions] = useState<Array<Question>>([]);
+
+  const getData = useCallback(async () => {
+    return await api<'questionList'>('GET', `/user/list?name=${myInfo?.userName}&type=rejected&page=${nowPage}&itemsPerPage=4`);
+  }, [myInfo, nowPage]);
 
   const fetchData = useCallback(async (refetch?: boolean) => {
     if(refetch) setNowPage(1);
-    const res = await api<'questionList'>('GET', `/user/list?name=${username}&type=accepted&page=${nowPage}&itemsPerPage=4`);
+    const res = await getData();
     setMaxPage(res.maxPage);
     if(refetch) setQuestions(res.question);
     else setQuestions(prevData => {
@@ -27,18 +28,13 @@ export const AcceptedQ: React.FC<{
         ...res.question
       ];
     });
-  }, [nowPage, maxPage, username]);
+  }, [nowPage, maxPage]);
 
   useEffect(() => {
     (async () => {
       await fetchData();
     })();
   }, [nowPage]);
-  useEffect(() => {
-    (async () => {
-      await fetchData(true);
-    })();
-  }, [username]);
 
   useBottomScrollListener(async () => {
     if(nowPage === maxPage) return;
@@ -48,7 +44,7 @@ export const AcceptedQ: React.FC<{
   return (
     <Vexile gap={3.6} fillx>
       {questions.map((info, idx) => (
-        <QCard mypage={mypage} question={info} fetchData={fetchData} key={idx+200} />
+        <QCard question={info} fetchData={fetchData} key={idx+100} />
       ))}
     </Vexile>
   );

@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LoadableComponent } from '@loadable/component';
 import { styled } from '#/stitches.config';
 import { Hexile } from '@haechi/flexile';
+import { checkAuth } from '.';
 
 export const ExceptionPage: React.FC<{
   Children: LoadableComponent<{}>;
-}> = ({ Children }) => {
+  needAuth?: boolean;
+}> = ({
+  Children,
+  needAuth = false,
+}) => {
+  const [Element, setElement] = useState<JSX.Element>();
+
+  useEffect(() => {
+    (async () => {
+      if(needAuth) setElement(await checkAuth(Children));
+    })();
+  }, []);
+
   return (
     <Container>
       <Hexile x='center' y='center' fillx filly>
-        <Children />
+        {needAuth ? Element : <Children />}
       </Hexile>
     </Container>
   );

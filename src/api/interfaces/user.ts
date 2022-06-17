@@ -28,3 +28,21 @@ export interface QuestionList {
     maxPage: number;
   };
 };
+
+export interface GetFollowList {
+  method: 'GET';
+  endpoint: '/user/follow/list';
+  req: {};
+  res: {
+    list: string[];
+    next: number | null;
+  };
+};
+export interface Follow {
+  method: 'POST';
+  endpoint: '/user/follow';
+  req: {
+    followName: string;
+  };
+  res: {};
+};

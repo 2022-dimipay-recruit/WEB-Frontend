@@ -1,4 +1,5 @@
 import {
+  Signup,
   LoginWithInfo,
   LoginWithRefreshToken,
   MyInfo,
@@ -7,9 +8,14 @@ import {
   UserFind,
   QuestionList,
   QuestionAnswer,
+  ImgUpload,
+  QuestionLike,
+  GetFollowList,
+  Follow,
 } from './interfaces';
 
 export interface APIResource {
+  signup: Signup,
   loginWithInfo: LoginWithInfo;
   loginWithRefreshToken: LoginWithRefreshToken;
   myInfo: MyInfo;
@@ -18,4 +24,8 @@ export interface APIResource {
   userFind: UserFind;
   questionList: QuestionList;
   questionAnswer: QuestionAnswer;
+  imgUpload: ImgUpload;
+  questionLike: QuestionLike;
+  getFollowList: GetFollowList;
+  follow: Follow;
 };

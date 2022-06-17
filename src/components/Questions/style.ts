@@ -1,5 +1,12 @@
 import { styled } from '#/stitches.config';
+import { Vexile } from '@haechi/flexile';
 
+export const Form = styled('form', {
+  width: '100%',
+});
+export const ContentBox = styled(Vexile, {
+  width: '70%',
+});
 export const ProfileImg = styled('img', {
   width: '7.2rem',
   height: '7.2rem',
