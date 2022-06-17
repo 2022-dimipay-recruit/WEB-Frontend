@@ -1,5 +1,16 @@
 import { AuthTokens } from '@/constants/types';
 
+export interface Signup {
+  method: 'POST';
+  endpoint: '/auth/signup';
+  req: {
+    email: string;
+    password: string;
+    name: string;
+    userName: string;
+  };
+  res: AuthTokens;
+};
 export interface LoginWithInfo {
   method: 'POST';
   endpoint: '/auth/signin';

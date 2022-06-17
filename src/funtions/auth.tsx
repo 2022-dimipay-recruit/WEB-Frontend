@@ -1,24 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
-import { getAccessToken, refetchToken } from '@/api';
+import { useParams } from 'react-router-dom';
+import { getAccessToken } from '@/api';
 import { LoadableComponent } from '@loadable/component';
 import { styled } from '#/stitches.config';
 import { Topbar } from '@/components';
 import { useSetRecoilState } from 'recoil';
 import { MyInfoState, UserParamState } from '@/state';
 import { fetchMyData } from '@/api/user';
-
-const checkAuth = async (Component: LoadableComponent<{}>) => {
-  try {
-    const accessToken = getAccessToken();
-    if(!accessToken) throw new Error('Cannot find access token');
-    
-    if(!(await refetchToken())) throw new Error('Cannot login with token');
-    return <Component />;
-  } catch {
-    return <Navigate to='/login' />;
-  }
-};
+import { checkAuth } from '.';
 
 export const Screen: React.FC<{
   Children: LoadableComponent<{}>;
