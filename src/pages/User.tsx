@@ -7,7 +7,7 @@ import { Hexile, Vexile } from '@haechi/flexile';
 import { PageType, QuestionType } from '@/constants/types';
 import { api, clearToken } from '@/api';
 import { makeAlert } from '@/funtions';
-import { AcceptedQ, Button, Radio, ReceivedQ, Selection } from '@/components';
+import { AcceptedQ, Button, Radio, ReceivedQ, RejectedQ, Selection } from '@/components';
 import { config, defaultProfile } from '@/constants/types';
 
 const User: React.FC = () => {
@@ -176,6 +176,9 @@ const User: React.FC = () => {
         <QuestionContainer>
           {page === 'acceptdQ' && (
             <AcceptedQ mypage={isMyPage} />
+          )}
+          {page === 'rejectedQ' && (
+            <RejectedQ />
           )}
           {page === 'receivedQ' && (
             <ReceivedQ />
