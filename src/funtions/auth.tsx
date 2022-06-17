@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getAccessToken } from '@/api';
+import { api, getAccessToken } from '@/api';
 import { LoadableComponent } from '@loadable/component';
 import { styled } from '#/stitches.config';
 import { Topbar } from '@/components';
-import { useSetRecoilState } from 'recoil';
-import { MyInfoState, UserParamState } from '@/state';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { FollowerListState, MyInfoState, UserParamState } from '@/state';
 import { fetchMyData } from '@/api/user';
 import { checkAuth } from '.';
 
@@ -29,7 +29,7 @@ export const Screen: React.FC<{
   }, []);
   useEffect(() => {
     if(!username) return;
-    setUserParam(username); 
+    setUserParam(username);
   }, [username]);
 
   return (

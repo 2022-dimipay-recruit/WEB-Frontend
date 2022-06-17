@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '#/stitches.config';
-import { useRecoilState, useRecoilValue, useRecoilRefresher_UNSTABLE } from 'recoil';
-import { FetchUserData, MyInfoState, UserParamState } from '@/state';
+import { useRecoilState, useRecoilValue, useRecoilRefresher_UNSTABLE, useSetRecoilState } from 'recoil';
+import { FetchUserData, FollowerListState, MyInfoState, UserParamState } from '@/state';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { PageType, QuestionType } from '@/constants/types';
 import { api, clearToken } from '@/api';
@@ -15,6 +15,7 @@ const User: React.FC = () => {
   const [myInfo, setMyInfo] = useRecoilState(MyInfoState);
   const username = useRecoilValue(UserParamState);
   const userData = useRecoilValue(FetchUserData(username));
+  const [followingList, setFollowingList ]= useRecoilState(FollowerListState);
   const refetchUserData = useRecoilRefresher_UNSTABLE(FetchUserData(username));
   const [isMyPage, setIsMyPage] = useState<boolean>(username == myInfo?.userName);
 
@@ -23,12 +24,22 @@ const User: React.FC = () => {
   const [questionContent, setQuestionContent] = useState<string>('');
   const [questionType, setQuestionType] = useState<QuestionType>('anonymous');
 
+  const refetchFollowingList = useCallback(async () => {
+    const res = await api<'getFollowList'>('GET', `/user/follow/list?type=following&name=${myInfo?.userName}`);
+    setFollowingList(res.list);
+  }, [myInfo]);
+
   useEffect(() => {
     setPage('acceptdQ');
   }, []);
   useEffect(() => {
     if(!userData) return history(`/${myInfo?.userName}`);
     setIsMyPage(username == myInfo?.userName);
+
+
+    (async () => {
+      await refetchFollowingList();
+    })();
   }, [myInfo, userData]);
   useEffect(() => {
     setPage('acceptdQ');
@@ -89,6 +100,15 @@ const User: React.FC = () => {
     }
   }, [myInfo]);
 
+  const follow = useCallback(async () => {
+    if(!userData) return;
+    await api<'follow'>('POST', '/user/follow', {
+      followName: userData.userName as string,
+    });
+    await refetchFollowingList();
+    refetchUserData();
+  }, [userData]);
+
   return (
     <Wrapper x='center' gap={4.8} fillx>
       <ProfileContainer x='center' gap={3.6}>
@@ -129,7 +149,8 @@ const User: React.FC = () => {
           {isMyPage ? (
             <Button color='black' onClick={logout}>로그아웃</Button>
           ) : (
-            <Button color='black'>팔로우</Button>
+            <Button color={followingList.includes(userData?.userName as string) ? 'bright' : 'black'}
+            onClick={follow}>{followingList.includes(userData?.userName as string) ? '언팔로우' : '팔로우'}</Button>
           )}
         </Hexile>
         <WriteBox mypage={isMyPage} gap={1.3}>
