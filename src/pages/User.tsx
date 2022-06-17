@@ -7,7 +7,7 @@ import { Hexile, Vexile } from '@haechi/flexile';
 import { PageType, QuestionType } from '@/constants/types';
 import { api, clearToken } from '@/api';
 import { makeAlert } from '@/funtions';
-import { Button, Radio, ReceivedQ, Selection } from '@/components';
+import { AcceptedQ, Button, Radio, ReceivedQ, Selection } from '@/components';
 import { config, defaultProfile } from '@/constants/types';
 
 const User: React.FC = () => {
@@ -30,6 +30,9 @@ const User: React.FC = () => {
     if(!userData) return history(`/${myInfo?.userName}`);
     setIsMyPage(username == myInfo?.userName);
   }, [myInfo, userData]);
+  useEffect(() => {
+    setPage('acceptdQ');
+  }, [username]);
 
   const questionRegistration = useCallback(async () => {
     if(
@@ -49,7 +52,7 @@ const User: React.FC = () => {
 
   const QRegiSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(myInfo);
+
     if(questionType === 'onymous' && !myInfo) return makeAlert.error('공개 질문은 로그인 후에 질문 가능해요');
 
     await questionRegistration();
@@ -171,6 +174,9 @@ const User: React.FC = () => {
           <Selection active={page === 'receivedQ'} onClick={() => changePage('receivedQ')}>새 질문</Selection>
         </Hexile>
         <QuestionContainer>
+          {page === 'acceptdQ' && (
+            <AcceptedQ mypage={isMyPage} />
+          )}
           {page === 'receivedQ' && (
             <ReceivedQ />
           )}

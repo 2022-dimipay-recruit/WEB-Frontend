@@ -51,7 +51,7 @@ const Router = () => {
         <Route path='/' element={<Screen Children={Main} />} />
         <Route path='/login' element={<ExceptionPage Children={Login} />} />
         <Route path='/signup' element={<ExceptionPage Children={Signup} />} />
-        <Route path='/imgUpload' element={<ExceptionPage Children={SignupImg} />} />
+        <Route path='/imgUpload' element={<ExceptionPage Children={SignupImg} needAuth />} />
         <Route path='/components' element={<Components />} />
         <Route path='/:username' element={<Screen Children={User} />} />
       </Routes>

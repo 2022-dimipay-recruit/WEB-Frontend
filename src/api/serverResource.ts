@@ -8,6 +8,7 @@ import {
   UserFind,
   QuestionList,
   QuestionAnswer,
+  QuestionLike,
   ImgUpload,
 } from './interfaces';
 
@@ -22,4 +23,5 @@ export interface APIResource {
   questionList: QuestionList;
   questionAnswer: QuestionAnswer;
   imgUpload: ImgUpload;
+  questionLike: QuestionLike;
 };

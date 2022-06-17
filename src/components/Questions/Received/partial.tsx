@@ -2,8 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Question, QuestionStatus } from '@/constants/types';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { Button } from '@/components';
-import { ContentBox, Form } from './style';
-import { Name, QuestionTitle, Textarea } from '../partial';
+import { Form, ContentBox, Name, QuestionTitle, Textarea } from '../style';
 import { api } from '@/api';
 import { makeAlert } from '@/funtions';
 import { useRecoilValue, useRecoilRefresher_UNSTABLE } from 'recoil';
@@ -22,7 +21,7 @@ export const QCard: React.FC<{
       return makeAlert.error('내용은 2자 이상 300자 이하로 작성해야해요');
     
     await api<'questionAnswer'>('POST', '/post/answer', {
-      questionId: String(question.id),
+      questionId: question.id,
       post: status === 'accepted' ? content : '답변 거부함',
       status,
     });
@@ -46,7 +45,7 @@ export const QCard: React.FC<{
 
   return (
     <Form onSubmit={answerSubmit}>
-      <Hexile x='space' y='center'>
+      <Hexile x='space' y='center' fillx>
         <ContentBox x='left' y='space' gap={2.4}>
           <Vexile x='left' gap={.6}>
             <Name>{question.authorName || '익명'}</Name>
