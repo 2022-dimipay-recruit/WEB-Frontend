@@ -1,4 +1,4 @@
-import { QuestionStatus, QuestionType } from '@/constants/types';
+import { QuestionType } from '@/constants/types';
 
 export interface QuestionRegi {
   method: 'POST';
@@ -17,9 +17,16 @@ export interface QuestionAnswer {
   method: 'POST';
   endpoint: '/post/answer';
   req: {
-    questionId: string,
-    post?: string,
-    status: QuestionStatus;
+    questionId: string;
+    post?: string;
+  };
+  res: {};
+};
+export interface QuestionReject {
+  method: 'PATCH' | 'DELETE';
+  endpoint: '/post/question';
+  req: {
+    questionId: string;
   };
   res: {};
 };

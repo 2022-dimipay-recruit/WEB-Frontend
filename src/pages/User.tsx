@@ -102,12 +102,13 @@ const User: React.FC = () => {
 
   const follow = useCallback(async () => {
     if(!userData) return;
+    if(!myInfo) return makeAlert.error('로그인 후에 이용해주세요');
     await api<'follow'>('POST', '/user/follow', {
       followName: userData.userName as string,
     });
     await refetchFollowingList();
     refetchUserData();
-  }, [userData]);
+  }, [userData, myInfo]);
 
   return (
     <Wrapper x='center' gap={4.8} fillx>
