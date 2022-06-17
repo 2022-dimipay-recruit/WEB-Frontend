@@ -8,6 +8,7 @@ import {
   QuestionReject,
   UserFind,
   QuestionList,
+  MyQuestionList,
   QuestionAnswer,
   ImgUpload,
   QuestionLike,
@@ -25,6 +26,7 @@ export interface APIResource {
   questionReject: QuestionReject;
   userFind: UserFind;
   questionList: QuestionList;
+  myQuestionList: MyQuestionList;
   questionAnswer: QuestionAnswer;
   imgUpload: ImgUpload;
   questionLike: QuestionLike;
