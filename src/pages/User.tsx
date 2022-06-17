@@ -49,6 +49,8 @@ const User: React.FC = () => {
 
   const QRegiSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(myInfo);
+    if(questionType === 'onymous' && !myInfo) return makeAlert.error('공개 질문은 로그인 후에 질문 가능해요');
 
     await questionRegistration();
   };
@@ -68,11 +70,21 @@ const User: React.FC = () => {
   
   const changePage = useCallback((pageType: PageType) => {
     if(pageType !== 'acceptdQ') {
-      if(!myInfo) return makeAlert.error('로그인해주세요\n* 자기질문만 확인할 수 있어요');
+      if(!myInfo) return makeAlert.error(<p>로그인해주세요<br/>* 자기질문만 확인할 수 있어요</p>);
       else if(!isMyPage) return makeAlert.error('자기질문만 확인할 수 있어요');
     }
     setPage(pageType);
   }, [myInfo, isMyPage]);
+
+  const questionTypeCheck = useCallback((e: React.ChangeEvent<HTMLInputElement> | undefined) => {
+    if(e) {
+      if(e.target.value === 'onymous' && !myInfo) {
+        e.preventDefault();
+        return makeAlert.error('공개 질문은 로그인 후에 질문 가능해요');
+      }
+      else setQuestionType(e.target.value as QuestionType);
+    }
+  }, [myInfo]);
 
   return (
     <Wrapper x='center' gap={4.8} fillx>
@@ -94,7 +106,7 @@ const User: React.FC = () => {
               <Hexile gap={2} linebreak>
                 <Hexile gap={1}>
                   <InfoTitle>팔로워</InfoTitle>
-                  <InfoNum>9</InfoNum>
+                  <InfoNum>{userData?.follower}</InfoNum>
                 </Hexile>
                 <Hexile gap={1}>
                   <InfoTitle>답변 질문</InfoTitle>
@@ -142,7 +154,7 @@ const User: React.FC = () => {
                   id='onymous'
                   name='type'
                   label='공개'
-                  onChange={({target: {value}}) => setQuestionType(value as QuestionType)}
+                  onChange={questionTypeCheck}
                   value='onymous' />
                 </Vexile>
                 <Button color='black' type='submit'>작성</Button>
