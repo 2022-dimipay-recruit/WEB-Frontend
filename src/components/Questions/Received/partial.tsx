@@ -20,12 +20,21 @@ export const QCard: React.FC<{
     if(status === 'accepted' && !(content.length >= 2 && content.length <= 300))
       return makeAlert.error('내용은 2자 이상 300자 이하로 작성해야해요');
     
-    await api<'questionAnswer'>('POST', '/post/answer', {
-      questionId: question.id,
-      post: status === 'accepted' ? content : '답변 거부함',
-      status,
-    });
-    makeAlert.success('질문에 답장했어요');
+    switch(status) {
+      case 'accepted':
+        await api<'questionAnswer'>('POST', '/post/answer', {
+          questionId: question.id,
+          post: content,
+        });
+        makeAlert.success('질문에 답장했어요');
+        break;
+      case 'rejected':
+        await api<'questionReject'>('PATCH', '/post/question', {
+          questionId: question.id
+        });
+        makeAlert.success('질문을 거절했어요');
+        break;
+    }
     setContent('');
     await fetchData(true);
     refetchUserData();

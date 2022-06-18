@@ -32,10 +32,25 @@ export interface Question {
   likeCount: number;
   liked: boolean;
 };
+export interface myQuestion {
+  id: string;
+  createAt: Date;
+  type: 'onymous' | 'anonymous';
+  status: 'received' | 'rejected' | 'received';
+  question: string;
+  answer: string;
+  liked: boolean;
+  receiver: {
+    userName: string;
+    image: string;
+    name: string;
+  };
+  likeCount: number;
+}
 
 export type QuestionType = 'anonymous' | 'onymous';
 export type QuestionStatus = 'accepted' | 'rejected';
-export type PageType = 'acceptdQ' | 'sendQ' | 'rejectedQ' | 'receivedQ';
+export type PageType = 'acceptdQ' | 'myQ' | 'rejectedQ' | 'receivedQ';
 
 export const defaultProfile = `${import.meta.env.VITE_API_URI}/assets/defaultProfile.jpg`;
 export const config = {

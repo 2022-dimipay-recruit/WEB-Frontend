@@ -47,6 +47,9 @@ export const api = async <T extends keyof APIResource>(
       case 'bad request':
         makeAlert.error('요청이 잘못되었어요');
         break;
+      case 'expired token':
+        makeAlert.error('토큰이 만료되었습니다. 새로고침 해주세요');
+        break;
       default:
         toast(errorMessage, {
           type: 'error'

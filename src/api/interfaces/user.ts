@@ -1,4 +1,4 @@
-import { FindUser, Question, UserInfoType } from '@/constants/types';
+import { FindUser, myQuestion, Question, UserInfoType } from '@/constants/types';
 
 export interface MyInfo {
   method: 'GET';
@@ -27,6 +27,13 @@ export interface QuestionList {
     question: Question[];
     maxPage: number;
   };
+};
+
+export interface MyQuestionList {
+  method: 'GET';
+  endpoint: '/user/me/questions';
+  req: {};
+  res: myQuestion[];
 };
 
 export interface GetFollowList {

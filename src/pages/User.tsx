@@ -7,7 +7,7 @@ import { Hexile, Vexile } from '@haechi/flexile';
 import { PageType, QuestionType } from '@/constants/types';
 import { api, clearToken } from '@/api';
 import { makeAlert } from '@/funtions';
-import { AcceptedQ, Button, Radio, ReceivedQ, RejectedQ, Selection } from '@/components';
+import { AcceptedQ, Button, MyQuestions, Radio, ReceivedQ, RejectedQ, Selection } from '@/components';
 import { config, defaultProfile } from '@/constants/types';
 
 const User: React.FC = () => {
@@ -102,12 +102,13 @@ const User: React.FC = () => {
 
   const follow = useCallback(async () => {
     if(!userData) return;
+    if(!myInfo) return makeAlert.error('로그인 후에 이용해주세요');
     await api<'follow'>('POST', '/user/follow', {
       followName: userData.userName as string,
     });
     await refetchFollowingList();
     refetchUserData();
-  }, [userData]);
+  }, [userData, myInfo]);
 
   return (
     <Wrapper x='center' gap={4.8} fillx>
@@ -190,13 +191,16 @@ const User: React.FC = () => {
       <Vexile gap={3.6} fillx>
         <Hexile fillx>
           <Selection active={page === 'acceptdQ'} onClick={() => changePage('acceptdQ')}>답변한 질문</Selection>
-          <Selection active={page === 'sendQ'} onClick={() => changePage('sendQ')}>보낸 질문</Selection>
+          <Selection active={page === 'myQ'} onClick={() => changePage('myQ')}>보낸 질문</Selection>
           <Selection active={page === 'rejectedQ'} onClick={() => changePage('rejectedQ')}>거절 질문</Selection>
           <Selection active={page === 'receivedQ'} onClick={() => changePage('receivedQ')}>새 질문</Selection>
         </Hexile>
         <QuestionContainer>
           {page === 'acceptdQ' && (
             <AcceptedQ mypage={isMyPage} />
+          )}
+          {page === 'myQ' && (
+            <MyQuestions />
           )}
           {page === 'rejectedQ' && (
             <RejectedQ />

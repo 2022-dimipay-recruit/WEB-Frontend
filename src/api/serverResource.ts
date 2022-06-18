@@ -5,8 +5,10 @@ import {
   MyInfo,
   UserInfo,
   QuestionRegi,
+  QuestionReject,
   UserFind,
   QuestionList,
+  MyQuestionList,
   QuestionAnswer,
   ImgUpload,
   QuestionLike,
@@ -21,8 +23,10 @@ export interface APIResource {
   myInfo: MyInfo;
   userInfo: UserInfo;
   questionRegi: QuestionRegi;
+  questionReject: QuestionReject;
   userFind: UserFind;
   questionList: QuestionList;
+  myQuestionList: MyQuestionList;
   questionAnswer: QuestionAnswer;
   imgUpload: ImgUpload;
   questionLike: QuestionLike;

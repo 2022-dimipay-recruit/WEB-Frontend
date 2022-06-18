@@ -18,7 +18,7 @@ export const AcceptedQ: React.FC<{
 
   const fetchData = useCallback(async (refetch?: boolean) => {
     if(refetch) setNowPage(1);
-    const res = await api<'questionList'>('GET', `/user/list?name=${username}&type=accepted&page=${nowPage}&itemsPerPage=4`);
+    const res = await api<'questionList'>('GET', `/user/list?name=${username}&type=accepted&page=${nowPage}&itemsPerPage=5`);
     setMaxPage(res.maxPage);
     if(refetch) setQuestions(res.question);
     else setQuestions(prevData => {

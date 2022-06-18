@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Answer, ContentBox, Name, ProfileImg, QuestionTitle } from '../style';
 import { config, defaultProfile, Question } from '@/constants/types';
 import { Hexile, Vexile } from '@haechi/flexile';
@@ -41,19 +41,43 @@ export const QCard: React.FC<{
           </Vexile>
         </Hexile>
       </ContentBox>
-      {mypage ? (<Controller />) : (<GuestBtns
-        question={question}
-        fetchData={fetchData}
-        refetchUserData={refetchUserData} />)}
+      {mypage ? (
+        <Controller
+          question={question}
+          fetchData={fetch}
+          refetchUserData={refetchUserData} />
+      ) : (
+        <GuestBtns
+          question={question}
+          fetchData={fetchData}
+          refetchUserData={refetchUserData} />)
+      }
     </Hexile>
   );
 };
 
-const Controller: React.FC = () => {
+const Controller: React.FC<{
+  question: Question;
+  fetchData: Function;
+  refetchUserData: Function;
+}> = ({
+  question,
+  fetchData,
+  refetchUserData,
+}) => {
+  const deleteQ = useCallback(async () => {
+    await api<'questionReject'>('DELETE', '/post/question', {
+      questionId: question.id
+    });
+    makeAlert.success('질문을 삭제했어요');
+    await fetchData(true);
+    refetchUserData();
+  }, [question]);
+
   return (
     <Vexile gap={1}>
       <Button color='black'>수정</Button>
-      <Button color='black'>삭제</Button>
+      <Button color='black' onClick={deleteQ}>삭제</Button>
     </Vexile>
   );
 };
