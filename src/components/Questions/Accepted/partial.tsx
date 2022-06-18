@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
-import { Answer, ContentBox, Name, ProfileImg, QuestionTitle } from '../style';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Answer, ContentBox, Name, ProfileImg, QuestionTitle, Textarea } from '../style';
 import { config, defaultProfile, Question } from '@/constants/types';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
@@ -22,6 +22,29 @@ export const QCard: React.FC<{
   const userData = useRecoilValue(FetchUserData(username));
   const refetchUserData = useRecoilRefresher_UNSTABLE(FetchUserData(username));
 
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
+  const [content, setContent] = useState<string>(question.answer);
+
+  const updateQ = async () => {
+    if(isUpdate) {
+      await api<'questionAnswer'>('POST', '/post/answer', {
+        questionId: question.id,
+        post: content,
+      });
+      makeAlert.success('답변을 수정하였습니다.');
+      await fetchData(true);
+      refetchUserData();
+      setIsUpdate(false);
+    } else setIsUpdate(true);
+  };
+
+  const textareaHandler = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if(e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault();
+      await updateQ();
+    }
+  };
+
   return (
     <Hexile x='space' y='center' fillx>
       <ContentBox x='left' y='space'>
@@ -35,9 +58,20 @@ export const QCard: React.FC<{
           ? defaultProfile
           : userData?.image}
           crossOrigin='anonymous' />
-          <Vexile gap={.6}>
-            <Name>{userData?.name}</Name>
-            <Answer>{question.answer}</Answer>
+          <Vexile gap={.6} fillx>
+            {isUpdate ? (
+              <Textarea
+              rows={2}
+              value={content}
+              onChange={({target: {value}}) => setContent(value)}
+              onKeyDown={textareaHandler}
+              placeholder='건전한 인터넷 문화를 위해 에티켓을 지켜주세요!'></Textarea>
+            ) : (
+              <>
+                <Name>{userData?.name}</Name>
+                <Answer>{question.answer}</Answer>
+              </>
+            )}
           </Vexile>
         </Hexile>
       </ContentBox>
@@ -45,7 +79,10 @@ export const QCard: React.FC<{
         <Controller
           question={question}
           fetchData={fetch}
-          refetchUserData={refetchUserData} />
+          refetchUserData={refetchUserData}
+          isUpdate={isUpdate}
+          setUpdate={setIsUpdate}
+          updateQ={updateQ} />
       ) : (
         <GuestBtns
           question={question}
@@ -60,24 +97,33 @@ const Controller: React.FC<{
   question: Question;
   fetchData: Function;
   refetchUserData: Function;
+  isUpdate: boolean;
+  setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+  updateQ: React.MouseEventHandler<HTMLButtonElement>;
 }> = ({
   question,
   fetchData,
   refetchUserData,
+  isUpdate,
+  setUpdate,
+  updateQ
 }) => {
   const deleteQ = useCallback(async () => {
-    await api<'questionReject'>('DELETE', '/post/question', {
-      questionId: question.id
-    });
-    makeAlert.success('질문을 삭제했어요');
-    await fetchData(true);
-    refetchUserData();
-  }, [question]);
+    if(isUpdate) setUpdate(false);
+    else {
+      await api<'questionReject'>('DELETE', '/post/question', {
+        questionId: question.id
+      });
+      makeAlert.success('질문을 삭제했어요');
+      await fetchData(true);
+      refetchUserData();
+    }
+  }, [question, isUpdate]);
 
   return (
     <Vexile gap={1}>
-      <Button color='black'>수정</Button>
-      <Button color='black' onClick={deleteQ}>삭제</Button>
+      <Button color='black' onClick={updateQ}>수정</Button>
+      <Button color='black' onClick={deleteQ}>{isUpdate ? '취소' : '삭제'}</Button>
     </Vexile>
   );
 };

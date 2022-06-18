@@ -18,7 +18,7 @@ export interface QuestionAnswer {
   endpoint: '/post/answer';
   req: {
     questionId: string;
-    post?: string;
+    post: string;
   };
   res: {};
 };
