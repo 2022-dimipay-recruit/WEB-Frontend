@@ -5,7 +5,7 @@ RUN yarn add global serve
 
 WORKDIR /usr/src/app
 
-COPY package-lock.json ./
+COPY yarn.json ./
 COPY package.json ./
 
 RUN yarn install
@@ -17,4 +17,4 @@ RUN VITE_API_URI=${BACK_URL} \
 
 EXPOSE 3000
 
-ENTRYPOINT ["serve", "-s", "dist"]
+ENTRYPOINT ["npx", "serve", "-s", "dist"]
