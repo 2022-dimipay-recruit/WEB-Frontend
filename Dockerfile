@@ -17,4 +17,4 @@ RUN VITE_API_URI=${BACK_URL} \
 
 EXPOSE 3000
 
-ENTRYPOINT ["serve", "-s", "dist"]
+ENTRYPOINT ["npx", "serve", "-s", "dist"]
