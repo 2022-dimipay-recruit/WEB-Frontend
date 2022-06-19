@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Vexile } from '@haechi/flexile';
-import { config, defaultProfile, FindUser } from '@/constants/types';
+import { config, defaultProfile, FindUser, Notification } from '@/constants/types';
 import { api } from '@/api';
 
-import { Wrapper, Container, ProfileImg, Name, UserName } from './style';
+import { Wrapper, Container, ProfileImg, Name, UserName, NotiTitle } from './style';
 
 export const Modal: React.FC<{
   type: 'search' | 'notification';
@@ -17,16 +17,22 @@ export const Modal: React.FC<{
 }) => {
   const history = useNavigate();
   const [data, setData] = useState<FindUser[]>([]);
+  const [notifications, setNotifications] = useState<Array<Notification>>([]);
+
+  useEffect(() => {
+    (async () => {;
+      setData(await api<'userFind'>(
+        'GET',
+        `/user/find?keyword=${content || ''}&${content ? 'preview=false' : `preview=true`}`
+      ));
+    })();
+  }, [content]);
 
   useEffect(() => {
     (async () => {
-      const res = await api<'userFind'>(
-        'GET',
-        `/user/find?keyword=${content || ''}&${content ? 'preview=false' : `preview=true`}`
-      );
-      setData(res);
+      if(type === 'notification') setNotifications(await api<'getNotification'>('GET', '/notification'));
     })();
-  }, [content]);
+  }, []);
 
   return (
     <Wrapper gap={1.8} type={type} active={active}>
@@ -39,6 +45,14 @@ export const Modal: React.FC<{
               <UserName>@{info.userName}</UserName>
             </Vexile>
           </Container>
+        ))
+      )}
+      {type === 'notification' && (
+        notifications.map((info, idx) => (
+          <Vexile y='center' gap={.2} fillx key={idx+500}>
+            <NotiTitle>{info.title}</NotiTitle>
+            <UserName>{info.message}</UserName>
+          </Vexile>
         ))
       )}
     </Wrapper>
