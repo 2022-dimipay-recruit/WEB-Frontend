@@ -14,6 +14,7 @@ import {
   SignupImg,
   User,
   Feed,
+  Loading,
 } from '@/pages';
 import { Screen, ExceptionPage } from '@/funtions';
 import { RecoilRoot } from 'recoil';
@@ -47,7 +48,7 @@ globalCss({
 
 const Router = () => {
   return (
-    <Suspense fallback={<h1>로딩중</h1>}>
+    <Suspense fallback={<Loading />}>
       <Routes>
         <Route path='/' element={<Screen Children={Main} />} />
         <Route path='/login' element={<ExceptionPage Children={Login} />} />
