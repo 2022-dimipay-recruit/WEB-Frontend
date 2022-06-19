@@ -5,7 +5,7 @@ RUN yarn add global serve
 
 WORKDIR /usr/src/app
 
-COPY package-lock.json ./
+COPY yarn.json ./
 COPY package.json ./
 
 RUN yarn install
