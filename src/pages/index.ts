@@ -8,4 +8,6 @@ export const SignupImg = loadable(() => import('./Signup/Image'));
 
 export const User = loadable(() => import('./User'));
 
+export const Loading = loadable(() => import('./Loading'));
+
 export const Components = loadable(() => import('./Components'));
