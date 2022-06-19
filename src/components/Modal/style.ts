@@ -59,3 +59,9 @@ export const UserName = styled('span', {
   fontWeight: 500,
   fontSize: '1.4rem',
 });
+
+export const NotiTitle = styled('span', {
+  color: '$blackGreen',
+  fontSize: '1.5rem',
+  fontWeight: 700,
+});

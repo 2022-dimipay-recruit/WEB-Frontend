@@ -81,6 +81,14 @@ interface RandomFeed {
   };
 };
 
+export interface Notification {
+  id: string;
+  createAt: Date;
+  title: string;
+  message: string;
+  read: boolean;
+};
+
 export interface Feed {
   followingFeed?: Array<FollowingFeed>;
   randomFeed: Array<RandomFeed>;
