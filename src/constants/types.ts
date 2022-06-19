@@ -46,7 +46,45 @@ export interface myQuestion {
     name: string;
   };
   likeCount: number;
-}
+};
+
+interface FollowingFeed {
+  follower: {
+    userName: string;
+    name: string;
+    image: string;
+  };
+  following: {
+    received: {
+      id: string;
+      createAt: Date;
+      question: string;
+      answer: string;
+      authorName: string;
+      likeCount: number;
+      liked?: boolean;
+    }[];
+  };
+};
+interface RandomFeed {
+  id: string;
+  createAt: Date;
+  question: string;
+  answer: string;
+  authorName: string;
+  likeCount: number;
+  liked?: boolean;
+  receiver: {
+      userName: string;
+      name: string;
+      image: string;
+  };
+};
+
+export interface Feed {
+  followingFeed?: Array<FollowingFeed>;
+  randomFeed: Array<RandomFeed>;
+};
 
 export type QuestionType = 'anonymous' | 'onymous';
 export type QuestionStatus = 'accepted' | 'rejected';

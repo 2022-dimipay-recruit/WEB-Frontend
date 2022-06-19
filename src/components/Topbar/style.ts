@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { styled } from '#/stitches.config';
 
-import { ReactComponent as Chat } from '@/assets/icons/chat.svg';
+import { ReactComponent as Feed } from '@/assets/icons/feed.svg';
+import { ReactComponent as FeedFill } from '@/assets/icons/feedFill.svg';
 import { ReactComponent as Notification } from '@/assets/icons/notifications.svg';
 import { ReactComponent as NotificationFill } from '@/assets/icons/notificationsFill.svg';
 import { Hexile } from '@haechi/flexile';
@@ -32,7 +33,12 @@ export const Title = styled(Link, {
     display: 'none',
   }
 });
-export const ChatIcn = styled(Chat, {
+export const FeedIcn = styled(Feed, {
+  width: '2.4rem',
+  height: '2.4rem',
+  cursor: 'pointer',
+});
+export const FeedIcnActive = styled(FeedFill, {
   width: '2.4rem',
   height: '2.4rem',
   cursor: 'pointer',

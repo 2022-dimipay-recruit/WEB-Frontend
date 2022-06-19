@@ -1,4 +1,10 @@
-import { FindUser, myQuestion, Question, UserInfoType } from '@/constants/types';
+import {
+  FindUser,
+  myQuestion,
+  Question,
+  UserInfoType,
+  Feed,
+} from '@/constants/types';
 
 export interface MyInfo {
   method: 'GET';
@@ -52,4 +58,11 @@ export interface Follow {
     followName: string;
   };
   res: {};
+};
+
+export interface GetFeed {
+  method: 'GET';
+  endpoint: '/user/feed';
+  req: {};
+  res: Feed;
 };

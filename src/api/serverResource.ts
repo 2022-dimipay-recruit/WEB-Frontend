@@ -14,6 +14,7 @@ import {
   QuestionLike,
   GetFollowList,
   Follow,
+  GetFeed,
 } from './interfaces';
 
 export interface APIResource {
@@ -32,4 +33,5 @@ export interface APIResource {
   questionLike: QuestionLike;
   getFollowList: GetFollowList;
   follow: Follow;
+  getFeed: GetFeed;
 };
