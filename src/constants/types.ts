@@ -53,8 +53,6 @@ interface FollowingFeed {
     userName: string;
     name: string;
     image: string;
-  };
-  following: {
     received: {
       id: string;
       createAt: Date;
