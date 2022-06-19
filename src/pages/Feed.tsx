@@ -4,7 +4,7 @@ import { Hexile, Vexile } from '@haechi/flexile';
 import { config, defaultProfile, Feed } from '@/constants/types';
 import { api } from '@/api';
 import { Answer, ContentBox, Name, ProfileImg, QuestionTitle } from '@/components/Questions/style';
-import { Button, Heart } from '@/components';
+import { Heart } from '@/components';
 import { useRecoilValue } from 'recoil';
 import { MyInfoState } from '@/state';
 import { makeAlert } from '@/funtions';
@@ -39,9 +39,9 @@ const FeedPage: React.FC = () => {
     <Wrapper gap={3.6} fillx>
       <Title>뉴스피드</Title>
       {feeds.followingFeed &&(
-        feeds.followingFeed.map((info, idx) => (
-          info.following.received.map(question => (
-            <Hexile x='space' y='center' fillx key={idx+400}>
+        feeds.followingFeed.map((info, idx) => {
+          return info.follower.received.map((question, idx1) => (
+            <Hexile x='space' y='center' fillx key={idx+idx1+400}>
               <ContentBox x='left' y='space'>
                 <Vexile x='left' gap={.6}>
                   <Name>{question.authorName || '익명'}</Name>
@@ -59,13 +59,12 @@ const FeedPage: React.FC = () => {
                   </Vexile>
                 </Hexile>
               </ContentBox>
-              <Vexile x='center' gap={.8}>
-                <Button color='black'>신고하기</Button>
+              <Vexile x='center' y='center'>
                 <Heart heart={question.likeCount} active={question.liked} onClick={async () => await questionLike(question.id)} />
               </Vexile>
             </Hexile>
           ))
-        )
+        }
       ))}
       {feeds.randomFeed.map((info, idx) => (
         <Hexile x='space' y='center' fillx key={idx+400}>
@@ -86,8 +85,7 @@ const FeedPage: React.FC = () => {
               </Vexile>
             </Hexile>
           </ContentBox>
-          <Vexile x='center' gap={.8}>
-            <Button color='black'>신고하기</Button>
+          <Vexile x='center' y='center'>
             <Heart heart={info.likeCount} active={info.liked} onClick={async () => await questionLike(info.id)} />
           </Vexile>
         </Hexile>
