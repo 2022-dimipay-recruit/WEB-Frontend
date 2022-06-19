@@ -43,8 +43,7 @@ export const QCard: React.FC<{
           </Vexile>
         </Hexile>
       </ContentBox>
-      <Vexile x='center' gap={.8}>
-        <Button color='black'>신고하기</Button>
+      <Vexile x='center' y='center'>
         <Heart heart={question.likeCount} active={question.liked} onClick={questionLike} />
       </Vexile>
     </Hexile>
