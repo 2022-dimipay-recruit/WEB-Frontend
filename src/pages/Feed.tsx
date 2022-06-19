@@ -42,7 +42,7 @@ const FeedPage: React.FC = () => {
         feeds.followingFeed.map((info, idx) => {
           return info.follower.received.map((question, idx1) => (
             <Hexile x='space' y='center' fillx key={idx+idx1+400}>
-              <ContentBox x='left' y='space'>
+              <ContentBox x='left' y='space' gap={2.4}>
                 <Vexile x='left' gap={.6}>
                   <Name>{question.authorName || '익명'}</Name>
                   <QuestionTitle>{question.question}</QuestionTitle>
@@ -68,7 +68,7 @@ const FeedPage: React.FC = () => {
       ))}
       {feeds.randomFeed.map((info, idx) => (
         <Hexile x='space' y='center' fillx key={idx+400}>
-          <ContentBox x='left' y='space'>
+          <ContentBox x='left' y='space' gap={2.4}>
             <Vexile x='left' gap={.6}>
               <Name>{info.authorName || '익명'}</Name>
               <QuestionTitle>{info.question}</QuestionTitle>
