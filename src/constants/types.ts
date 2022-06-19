@@ -98,7 +98,7 @@ export type QuestionType = 'anonymous' | 'onymous';
 export type QuestionStatus = 'accepted' | 'rejected';
 export type PageType = 'acceptdQ' | 'myQ' | 'rejectedQ' | 'receivedQ';
 
-export const defaultProfile = `${import.meta.env.VITE_API_URI}/assets/defaultProfile.jpg`;
+export const defaultProfile = `https://i.ibb.co/NVjrcN3/default-Profile.jpg`;
 export const config = {
   defaultProfile: `/defaultProfile.jpg`,
 };
