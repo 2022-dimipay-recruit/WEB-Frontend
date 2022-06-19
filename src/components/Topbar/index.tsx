@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  ChatIcn,
+  FeedIcn,
   NotificationIcn,
   Title,
   ProfileImg,
@@ -9,17 +9,20 @@ import {
   ProfileBox,
   NotificationIcnActive,
   ProfileContainer,
-  IcnBox
+  IcnBox,
+  FeedIcnActive
 } from './style';
 import { SearchBar, Button, Modal } from '@/components';
 import { useRecoilValue } from 'recoil';
 import { MyInfoState } from '@/state';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { config, defaultProfile } from '@/constants/types';
 
 export const Topbar: React.FC = () => {
   const userData = useRecoilValue(MyInfoState);
   const history = useNavigate();
+
+  const location = useLocation();
   
   const [content, setContent] = useState<string>('');
   const [notifiFocus, setNotifiFocus] = useState<boolean>(false);
@@ -32,7 +35,11 @@ export const Topbar: React.FC = () => {
         userData ? (
           <ProfileContainer y='center' filly>
             <IcnBox y='center' filly>
-              <ChatIcn />
+              {location.pathname === '/feed' ? (
+                <FeedIcnActive />
+              ) : (
+                <FeedIcn onClick={() => history('/feed')} />
+              )}
               {notifiFocus ? (
                 <NotificationIcnActive onClick={() => setNotifiFocus(false)} />
               ) : (
@@ -40,7 +47,10 @@ export const Topbar: React.FC = () => {
               )}
             </IcnBox>
             <ProfileBox y='center' filly gap={1} onClick={() => history(`/${userData.userName}`)}>
-              <ProfileImg src={userData ? (userData.image === config.defaultProfile ? defaultProfile : userData.image) : defaultProfile} crossOrigin='anonymous' />
+              <ProfileImg
+              src={userData
+              ? (userData.image === config.defaultProfile ? defaultProfile : userData.image)
+              : defaultProfile} crossOrigin='anonymous' />
               <Name>{userData?.name}</Name>
             </ProfileBox>
           </ProfileContainer>

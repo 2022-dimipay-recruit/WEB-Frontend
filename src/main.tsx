@@ -13,6 +13,7 @@ import {
   Signup,
   SignupImg,
   User,
+  Feed,
 } from '@/pages';
 import { Screen, ExceptionPage } from '@/funtions';
 import { RecoilRoot } from 'recoil';
@@ -53,6 +54,7 @@ const Router = () => {
         <Route path='/signup' element={<ExceptionPage Children={Signup} />} />
         <Route path='/imgUpload' element={<ExceptionPage Children={SignupImg} needAuth />} />
         <Route path='/components' element={<Components />} />
+        <Route path='/feed' element={<Screen Children={Feed} />} />
         <Route path='/:username' element={<Screen Children={User} />} />
       </Routes>
     </Suspense>
