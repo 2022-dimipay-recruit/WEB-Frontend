@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '#/stitches.config';
-import { useRecoilState, useRecoilValue, useRecoilRefresher_UNSTABLE, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useRecoilRefresher_UNSTABLE } from 'recoil';
 import { FetchUserData, FollowerListState, MyInfoState, UserParamState } from '@/state';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { PageType, QuestionType } from '@/constants/types';
@@ -18,6 +18,16 @@ const User: React.FC = () => {
   const [followingList, setFollowingList ]= useRecoilState(FollowerListState);
   const refetchUserData = useRecoilRefresher_UNSTABLE(FetchUserData(username));
   const [isMyPage, setIsMyPage] = useState<boolean>(username == myInfo?.userName);
+
+  const ImageChange = async (e: React.ChangeEvent<any>) => {
+    const file = e.target.files[0];
+
+    const data = new FormData();
+    data.append('image', file);
+
+    await api<'imgUpload'>('POST', '/upload', data);
+    refetchUserData();
+  };
 
   const [page, setPage] = useState<PageType>('acceptdQ');
 
@@ -122,7 +132,15 @@ const User: React.FC = () => {
                 : defaultProfile}
               crossOrigin='anonymous' />
               {isMyPage && (
-                <ProfileUpdate x='center' y='center' fillx>수정</ProfileUpdate>
+                <ProfileUpdate x='center' y='center' fillx>
+                  <InputFile 
+                  type='file'
+                  name='profile'
+                  id='profile'
+                  accept='image/*'
+                  onChange={ImageChange} />
+                  <Label htmlFor='profile'>수정</Label>
+                </ProfileUpdate>
               )}
             </Profile>
             <Vexile filly>
@@ -308,4 +326,16 @@ const WriteTextArea = styled('textarea', {
 const QuestionContainer = styled('div', {
   padding: '0 2.4rem',
   width: '100%',
+});
+
+const InputFile = styled('input', {
+  display: 'none',
+});
+const Label = styled('label', {
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  cursor: 'pointer',
 });
