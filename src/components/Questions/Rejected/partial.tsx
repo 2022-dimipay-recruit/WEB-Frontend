@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Question, QuestionStatus } from '@/constants/types';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { Button } from '@/components';
@@ -12,6 +13,7 @@ export const QCard: React.FC<{
   question: Question;
   fetchData: Function;
 }> = ({ question, fetchData }) => {
+  const history = useNavigate();
   const [content, setContent] = useState<string>('');
   const username = useRecoilValue(UserParamState);
   const refetchUserData = useRecoilRefresher_UNSTABLE(FetchUserData(username));
@@ -51,7 +53,9 @@ export const QCard: React.FC<{
       <Hexile x='space' y='center' fillx>
         <ContentBox x='left' y='space' gap={2.4}>
           <Vexile x='left' gap={.6}>
-            <Name>{question.authorName || '익명'}</Name>
+            <Name onClick={() => {
+              if(question.authorName) history(`/${question.authorName}`);
+            }}>{question.authorName || '익명'}</Name>
             <QuestionTitle>{question.question}</QuestionTitle>
           </Vexile>
           <Textarea

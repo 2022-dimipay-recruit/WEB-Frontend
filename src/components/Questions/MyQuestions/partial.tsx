@@ -1,5 +1,5 @@
 import { api } from '@/api';
-import { Button } from '@/components/Button';
+import { useNavigate } from 'react-router-dom';
 import { Heart } from '@/components/Heart';
 import { config, defaultProfile, myQuestion } from '@/constants/types';
 import { MyInfoState } from '@/state';
@@ -15,6 +15,7 @@ export const QCard: React.FC<{
   question,
   fetchData
 }) => {
+  const history = useNavigate();
   const myInfo = useRecoilValue(MyInfoState);
 
   const questionLike = async () => {
@@ -38,7 +39,7 @@ export const QCard: React.FC<{
           : question.receiver.image}
           crossOrigin='anonymous' />
           <Vexile gap={.6}>
-            <Name>{question.receiver.name}</Name>
+            <Name onClick={() => history(`/${question.receiver.userName}`)}>{question.receiver.name}</Name>
             <Answer>{question.answer}</Answer>
           </Vexile>
         </Hexile>

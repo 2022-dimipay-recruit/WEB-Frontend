@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from '#/stitches.config';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { config, defaultProfile, Feed } from '@/constants/types';
@@ -10,6 +11,7 @@ import { MyInfoState } from '@/state';
 import { makeAlert } from '@/funtions';
 
 const FeedPage: React.FC = () => {
+  const history = useNavigate();
   const myInfo = useRecoilValue(MyInfoState);
 
   const [feeds, setFeeds] = useState<Feed>({
@@ -44,7 +46,9 @@ const FeedPage: React.FC = () => {
             <Hexile x='space' y='center' fillx key={idx+idx1+400}>
               <ContentBox x='left' y='space' gap={2.4}>
                 <Vexile x='left' gap={.6}>
-                  <Name>{question.authorName || '익명'}</Name>
+                  <Name onClick={() => {
+                    if(question.authorName) history(`/${question.authorName}`);
+                  }}>{question.authorName || '익명'}</Name>
                   <QuestionTitle>{question.question}</QuestionTitle>
                 </Vexile>
                 <Hexile y='center' gap={2.4} fillx>
@@ -54,7 +58,7 @@ const FeedPage: React.FC = () => {
                   : info.follower.image}
                   crossOrigin='anonymous' />
                   <Vexile gap={.6} fillx>
-                    <Name>{info.follower.name}</Name>
+                    <Name onClick={() => history(`/${info.follower.userName}`)}>{info.follower.name}</Name>
                     <Answer>{question.answer}</Answer>
                   </Vexile>
                 </Hexile>
@@ -70,7 +74,9 @@ const FeedPage: React.FC = () => {
         <Hexile x='space' y='center' fillx key={idx+400}>
           <ContentBox x='left' y='space' gap={2.4}>
             <Vexile x='left' gap={.6}>
-              <Name>{info.authorName || '익명'}</Name>
+              <Name onClick={() => {
+                if(info.authorName) history(`/${info.authorName}`);
+              }}>{info.authorName || '익명'}</Name>
               <QuestionTitle>{info.question}</QuestionTitle>
             </Vexile>
             <Hexile y='center' gap={2.4} fillx>
@@ -80,7 +86,7 @@ const FeedPage: React.FC = () => {
               : info.receiver.image}
               crossOrigin='anonymous' />
               <Vexile gap={.6} fillx>
-                <Name>{info.receiver.name}</Name>
+                <Name onClick={() => history(`/${info.receiver.userName}`)}>{info.receiver.name}</Name>
                 <Answer>{info.answer}</Answer>
               </Vexile>
             </Hexile>
@@ -98,6 +104,7 @@ export default FeedPage;
 
 const Wrapper = styled(Vexile, {
   paddingTop: '14rem',
+  marginBottom: '3.6rem',
   '@mobile': {
     paddingTop: '7rem',
   },
