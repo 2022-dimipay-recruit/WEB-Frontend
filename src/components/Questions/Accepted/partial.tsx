@@ -82,7 +82,7 @@ export const QCard: React.FC<{
       {mypage ? (
         <Controller
           question={question}
-          fetchData={fetch}
+          fetchData={fetchData}
           refetchUserData={refetchUserData}
           isUpdate={isUpdate}
           setUpdate={setIsUpdate}
