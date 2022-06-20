@@ -45,12 +45,12 @@ const FeedPage: React.FC = () => {
           return info.follower.received.map((question, idx1) => (
             <Hexile x='space' y='center' fillx key={idx+idx1+400}>
               <ContentBox x='left' y='space' gap={2.4}>
-                <Vexile x='left' gap={.6}>
+                <QBox x='left' gap={.6}>
                   <Name onClick={() => {
                     if(question.authorName) history(`/${question.authorName}`);
                   }}>{question.authorName || '익명'}</Name>
                   <QuestionTitle>{question.question}</QuestionTitle>
-                </Vexile>
+                </QBox>
                 <Hexile y='center' gap={2.4} fillx>
                   <ProfileImg
                   src={info.follower.image === config.defaultProfile
@@ -73,12 +73,12 @@ const FeedPage: React.FC = () => {
       {feeds.randomFeed.map((info, idx) => (
         <Hexile x='space' y='center' fillx key={idx+400}>
           <ContentBox x='left' y='space' gap={2.4}>
-            <Vexile x='left' gap={.6}>
+            <QBox x='left' gap={.6}>
               <Name onClick={() => {
                 if(info.authorName) history(`/${info.authorName}`);
               }}>{info.authorName || '익명'}</Name>
               <QuestionTitle>{info.question}</QuestionTitle>
-            </Vexile>
+            </QBox>
             <Hexile y='center' gap={2.4} fillx>
               <ProfileImg
               src={info.receiver.image === config.defaultProfile
@@ -114,4 +114,9 @@ const Title = styled('span', {
   color: '$blackGreen',
   fontWeight: 700,
   fontSize: '3.6rem',
+});
+
+const QBox = styled(Vexile, {
+  width: '100%',
+  overflow: 'hidden',
 });

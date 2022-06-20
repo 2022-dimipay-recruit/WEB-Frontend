@@ -38,6 +38,11 @@ const Wrapper = styled(Vexile, {
   fontSize: '4rem',
   fontWeight: 700,
   color: '$blackGreen',
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  background: '$whiteGreen',
+  zIndex: 1000,
   transition: 'opacity .3s ease',
   variants: {
     exited: {
