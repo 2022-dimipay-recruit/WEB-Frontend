@@ -9,7 +9,6 @@ import { globalCss } from '#/stitches.config';
 import {
   Main,
   Login,
-  Components,
   Signup,
   SignupImg,
   User,
@@ -54,7 +53,6 @@ const Router = () => {
         <Route path='/login' element={<ExceptionPage Children={Login} />} />
         <Route path='/signup' element={<ExceptionPage Children={Signup} />} />
         <Route path='/imgUpload' element={<ExceptionPage Children={SignupImg} needAuth />} />
-        <Route path='/components' element={<Components />} />
         <Route path='/feed' element={<Screen Children={Feed} />} />
         <Route path='/:username' element={<Screen Children={User} />} />
       </Routes>
