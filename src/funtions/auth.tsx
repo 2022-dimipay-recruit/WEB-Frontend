@@ -5,7 +5,7 @@ import { LoadableComponent } from '@loadable/component';
 import { styled } from '#/stitches.config';
 import { Topbar } from '@/components';
 import { useSetRecoilState } from 'recoil';
-import { MyInfoState, UserParamState } from '@/state';
+import { LoadingState, MyInfoState, UserParamState } from '@/state';
 import { fetchMyData } from '@/api/user';
 import { checkAuth } from '.';
 
@@ -15,21 +15,25 @@ export const Screen: React.FC<{
 }> = ({ Children, needAuth=false }) => {
   const setInfo = useSetRecoilState(MyInfoState);
   const setUserParam = useSetRecoilState(UserParamState);
+  const setLoading = useSetRecoilState(LoadingState);
   const [Element, setElement] = useState<JSX.Element>();
 
   const { username } = useParams();
 
   useEffect(() => {
+    setLoading(true);
     (async () => {
       setElement(await checkAuth(Children));
 
       if(!getAccessToken()) return setInfo(null);
       setInfo(await fetchMyData());
+      if(!username) setLoading(false);
     })();
   }, []);
   useEffect(() => {
     if(!username) return;
     setUserParam(username);
+    setLoading(false);
   }, [username]);
 
   return (

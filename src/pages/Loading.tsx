@@ -7,7 +7,7 @@ const Loading: React.FC<{
   show: boolean;
 }> = ({ show = false, }) => {
   return (
-    <Transition in={show} timeout={500} unmounOnExit>
+    <Transition in={show} timeout={300} unmounOnExit>
       {status => (
         <Wrapper x='center' y='center' gap={2} exited={status === 'exited'} entered={status === 'entered'}>
           <LoadingIcn />
@@ -38,7 +38,7 @@ const Wrapper = styled(Vexile, {
   fontSize: '4rem',
   fontWeight: 700,
   color: '$blackGreen',
-  transition: 'opacity .5s ease',
+  transition: 'opacity .3s ease',
   variants: {
     exited: {
       true: {
