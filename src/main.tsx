@@ -16,12 +16,13 @@ import {
   Loading,
 } from '@/pages';
 import { Screen, ExceptionPage } from '@/funtions';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilValue } from 'recoil';
 
 import '@/assets/Pretendard/index.css';
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.min.css';
+import { MyInfoState } from './state';
 
 globalCss({
   ':root': {
@@ -46,8 +47,11 @@ globalCss({
 })();
 
 const Router = () => {
+  const myInfo = useRecoilValue(MyInfoState);
+
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<Loading show />}>
+      <Loading show={myInfo === undefined} />
       <Routes>
         <Route path='/' element={<Screen Children={Main} />} />
         <Route path='/login' element={<ExceptionPage Children={Login} />} />

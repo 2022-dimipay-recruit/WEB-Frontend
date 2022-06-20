@@ -1,13 +1,20 @@
 import React from 'react';
 import { Vexile } from '@haechi/flexile';
 import { styled, keyframes } from '#/stitches.config';
+import { Transition } from 'react-transition-group';
 
-const Loading: React.FC = () => {
+const Loading: React.FC<{
+  show: boolean;
+}> = ({ show = false, }) => {
   return (
-    <Wrapper x='center' y='center' gap={2}>
-      <LoadingIcn />
-      로딩 중
-    </Wrapper>
+    <Transition in={show} timeout={500} unmounOnExit>
+      {status => (
+        <Wrapper x='center' y='center' gap={2} status={status as 'exited' | 'entered'}>
+          <LoadingIcn />
+          Pasked
+        </Wrapper>
+      )}
+    </Transition>
   );
 };
 
@@ -23,7 +30,7 @@ const LoadingIcn = styled('div', {
   borderRadius: '50%',
   border: '.5rem solid $brightGreen',
   borderTop: '.5rem solid $darkGreen',
-  animation: `${LoadingAnimation} 2s linear infinite`
+  animation: `${LoadingAnimation} 1s ease infinite`
 });
 const Wrapper = styled(Vexile, {
   width: '100vw',
@@ -31,4 +38,16 @@ const Wrapper = styled(Vexile, {
   fontSize: '4rem',
   fontWeight: 700,
   color: '$blackGreen',
+  variants: {
+    status: {
+      exited: {
+        display: 'none',
+        opacity: 0,
+      },
+      entered: {
+        display: 'flex',
+        opacity: 1,
+      }
+    }
+  }
 });

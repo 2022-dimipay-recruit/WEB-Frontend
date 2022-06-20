@@ -30,7 +30,7 @@ export const Modal: React.FC<{
 
   useEffect(() => {
     (async () => {
-      if(type === 'notification') setNotifications(await api<'getNotification'>('GET', '/notification'));
+      if(type === 'notification') setNotifications(await api<'getNotification'>('GET', '/notification?type=all'));
     })();
   }, []);
 
