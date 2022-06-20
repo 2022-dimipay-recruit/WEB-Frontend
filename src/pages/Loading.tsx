@@ -9,7 +9,7 @@ const Loading: React.FC<{
   return (
     <Transition in={show} timeout={500} unmounOnExit>
       {status => (
-        <Wrapper x='center' y='center' gap={2} status={status as 'exited' | 'entered'}>
+        <Wrapper x='center' y='center' gap={2} exited={status === 'exited'} entered={status === 'entered'}>
           <LoadingIcn />
           Pasked
         </Wrapper>
@@ -38,15 +38,22 @@ const Wrapper = styled(Vexile, {
   fontSize: '4rem',
   fontWeight: 700,
   color: '$blackGreen',
+  transition: 'opacity .5s ease',
   variants: {
-    status: {
-      exited: {
+    exited: {
+      true: {
         display: 'none',
-        opacity: 0,
       },
-      entered: {
+      false: {
         display: 'flex',
+      }
+    },
+    entered: {
+      true: {
         opacity: 1,
+      },
+      false: {
+        opacity: 0,
       }
     }
   }
