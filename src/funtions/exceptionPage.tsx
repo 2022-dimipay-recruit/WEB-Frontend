@@ -5,6 +5,7 @@ import { Hexile } from '@haechi/flexile';
 import { checkAuth } from '.';
 import { useSetRecoilState } from 'recoil';
 import { LoadingState } from '@/state';
+import { useLocation } from 'react-router-dom';
 
 export const ExceptionPage: React.FC<{
   Children: LoadableComponent<{}>;
@@ -15,6 +16,7 @@ export const ExceptionPage: React.FC<{
 }) => {
   const [Element, setElement] = useState<JSX.Element>();
   const setLoading = useSetRecoilState(LoadingState);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     setLoading(true);
@@ -22,7 +24,7 @@ export const ExceptionPage: React.FC<{
       if(needAuth) setElement(await checkAuth(Children));
       setLoading(false);
     })();
-  }, []);
+  }, [pathname]);
 
   return (
     <Container>
