@@ -35,7 +35,7 @@ export const Modal: React.FC<{
     (async () => {
       if(type === 'notification' && myInfo) setNotifications(await api<'getNotification'>('GET', '/notification?type=all'));
     })();
-  }, []);
+  }, [myInfo]);
 
   return (
     <Wrapper gap={1.8} type={type} active={active}>
