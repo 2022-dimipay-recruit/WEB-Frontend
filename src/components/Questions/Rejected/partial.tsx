@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Question, QuestionStatus } from '@/constants/types';
+import { Question } from '@/constants/types';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { Button } from '@/components';
 import { Form, ContentBox, Name, QuestionTitle, Textarea } from '../style';
@@ -18,8 +18,8 @@ export const QCard: React.FC<{
   const username = useRecoilValue(UserParamState);
   const refetchUserData = useRecoilRefresher_UNSTABLE(FetchUserData(username));
 
-  const answer = useCallback(async (status: QuestionStatus) => {
-    if(status === 'accepted' && !(content.length >= 2 && content.length <= 300))
+  const answer = useCallback(async () => {
+    if(!(content.length >= 2 && content.length <= 300))
       return makeAlert.error('내용은 2자 이상 300자 이하로 작성해야해요');
     
     await api<'questionAnswer'>('POST', '/post/answer', {
@@ -35,8 +35,13 @@ export const QCard: React.FC<{
   const textareaHandler = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if(e.keyCode === 13 && !e.shiftKey) {
       e.preventDefault();
-      await answer('accepted');
+      await answer();
     }
+  };
+  
+  const updateSubmitHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await answer();
   };
 
   const deleteQ = useCallback(async () => {
@@ -49,7 +54,7 @@ export const QCard: React.FC<{
   }, [question]);
 
   return (
-    <Form>
+    <Form onSubmit={updateSubmitHandler}>
       <Hexile x='space' y='center' fillx>
         <ContentBox x='left' y='space' gap={2.4}>
           <Vexile x='left' gap={.6}>
