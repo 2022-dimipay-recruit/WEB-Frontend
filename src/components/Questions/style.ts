@@ -4,6 +4,10 @@ import { Hexile, Vexile } from '@haechi/flexile';
 export const Form = styled('form', {
   width: '100%',
 });
+export const QBox = styled(Vexile, {
+  width: '100%',
+  overflow: 'hidden',
+});
 export const ContentBox = styled(Vexile, {
   width: '70%',
 });
@@ -21,6 +25,11 @@ export const QuestionTitle = styled('span', {
   color: '$darkGreen',
   fontWeight: 700,
   fontSize: '2rem',
+  width: '100%',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  wordBreak: 'break-all',
 });
 export const Answer = styled('span', {
   color: '$blackGreen',
