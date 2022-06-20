@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Answer, ContentBox, Name, ProfileImg, QuestionTitle, Textarea } from '../style';
+import { Answer, ContentBox, Name, ProfileImg, QBox, QuestionTitle, Textarea } from '../style';
 import { config, defaultProfile, Question } from '@/constants/types';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
@@ -50,12 +50,12 @@ export const QCard: React.FC<{
   return (
     <Hexile x='space' y='center' fillx>
       <ContentBox x='left' y='space' gap={2.4}>
-        <Vexile x='left' gap={.6}>
+        <QBox x='left' gap={.6}>
           <Name onClick={() => {
             if(question.authorName) history(`/${question.authorName}`);
           }}>{question.authorName || '익명'}</Name>
           <QuestionTitle>{question.question}</QuestionTitle>
-        </Vexile>
+        </QBox>
         <Hexile y='center' gap={2.4} fillx>
           <ProfileImg
           src={userData?.image === config.defaultProfile
