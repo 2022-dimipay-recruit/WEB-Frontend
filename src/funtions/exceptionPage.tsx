@@ -3,6 +3,8 @@ import { LoadableComponent } from '@loadable/component';
 import { styled } from '#/stitches.config';
 import { Hexile } from '@haechi/flexile';
 import { checkAuth } from '.';
+import { useSetRecoilState } from 'recoil';
+import { LoadingState } from '@/state';
 
 export const ExceptionPage: React.FC<{
   Children: LoadableComponent<{}>;
@@ -12,10 +14,13 @@ export const ExceptionPage: React.FC<{
   needAuth = false,
 }) => {
   const [Element, setElement] = useState<JSX.Element>();
+  const setLoading = useSetRecoilState(LoadingState);
 
   useEffect(() => {
+    setLoading(true);
     (async () => {
       if(needAuth) setElement(await checkAuth(Children));
+      setLoading(false);
     })();
   }, []);
 

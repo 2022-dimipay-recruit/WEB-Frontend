@@ -4,6 +4,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  useParams,
 } from 'react-router-dom';
 import { globalCss } from '#/stitches.config';
 import {
@@ -22,7 +23,7 @@ import '@/assets/Pretendard/index.css';
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.min.css';
-import { MyInfoState } from './state';
+import { LoadingState, MyInfoState } from './state';
 
 globalCss({
   ':root': {
@@ -47,11 +48,11 @@ globalCss({
 })();
 
 const Router = () => {
-  const myInfo = useRecoilValue(MyInfoState);
+  const isLoading = useRecoilValue(LoadingState);
 
   return (
     <Suspense fallback={<Loading show />}>
-      <Loading show={myInfo === undefined} />
+      <Loading show={isLoading} />
       <Routes>
         <Route path='/' element={<Screen Children={Main} />} />
         <Route path='/login' element={<ExceptionPage Children={Login} />} />

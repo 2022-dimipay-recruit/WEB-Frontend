@@ -5,6 +5,8 @@ import { config, defaultProfile, FindUser, Notification } from '@/constants/type
 import { api } from '@/api';
 
 import { Wrapper, Container, ProfileImg, Name, UserName, NotiTitle } from './style';
+import { useRecoilValue } from 'recoil';
+import { MyInfoState } from '@/state';
 
 export const Modal: React.FC<{
   type: 'search' | 'notification';
@@ -18,6 +20,7 @@ export const Modal: React.FC<{
   const history = useNavigate();
   const [data, setData] = useState<FindUser[]>([]);
   const [notifications, setNotifications] = useState<Array<Notification>>([]);
+  const myInfo = useRecoilValue(MyInfoState);
 
   useEffect(() => {
     (async () => {;
@@ -30,7 +33,7 @@ export const Modal: React.FC<{
 
   useEffect(() => {
     (async () => {
-      if(type === 'notification') setNotifications(await api<'getNotification'>('GET', '/notification?type=all'));
+      if(type === 'notification' && myInfo) setNotifications(await api<'getNotification'>('GET', '/notification?type=all'));
     })();
   }, []);
 
