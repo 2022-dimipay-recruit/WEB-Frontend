@@ -15,6 +15,7 @@ export const ProfileImg = styled('img', {
 export const Name = styled('span', {
   color: '$baseGreen',
   fontWeight: 500,
+  cursor: 'pointer',
 });
 export const QuestionTitle = styled('span', {
   color: '$darkGreen',

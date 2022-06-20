@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Answer, ContentBox, Name, ProfileImg, QuestionTitle, Textarea } from '../style';
 import { config, defaultProfile, Question } from '@/constants/types';
 import { Hexile, Vexile } from '@haechi/flexile';
@@ -16,8 +17,9 @@ export const QCard: React.FC<{
 }> = ({
   mypage,
   question,
-  fetchData
+  fetchData,
 }) => {
+  const history = useNavigate();
   const username = useRecoilValue(UserParamState);
   const userData = useRecoilValue(FetchUserData(username));
   const refetchUserData = useRecoilRefresher_UNSTABLE(FetchUserData(username));
@@ -47,9 +49,11 @@ export const QCard: React.FC<{
 
   return (
     <Hexile x='space' y='center' fillx>
-      <ContentBox x='left' y='space'>
+      <ContentBox x='left' y='space' gap={2.4}>
         <Vexile x='left' gap={.6}>
-          <Name>{question.authorName || '익명'}</Name>
+          <Name onClick={() => {
+            if(question.authorName) history(`/${question.authorName}`);
+          }}>{question.authorName || '익명'}</Name>
           <QuestionTitle>{question.question}</QuestionTitle>
         </Vexile>
         <Hexile y='center' gap={2.4} fillx>
@@ -68,7 +72,7 @@ export const QCard: React.FC<{
               placeholder='건전한 인터넷 문화를 위해 에티켓을 지켜주세요!'></Textarea>
             ) : (
               <>
-                <Name>{userData?.name}</Name>
+                <Name onClick={() => history(`/${userData?.userName}`)}>{userData?.name}</Name>
                 <Answer>{question.answer}</Answer>
               </>
             )}
