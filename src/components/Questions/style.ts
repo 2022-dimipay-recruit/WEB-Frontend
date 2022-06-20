@@ -1,5 +1,5 @@
-import { styled } from '#/stitches.config';
-import { Vexile } from '@haechi/flexile';
+import { styled, keyframes } from '#/stitches.config';
+import { Hexile, Vexile } from '@haechi/flexile';
 
 export const Form = styled('form', {
   width: '100%',
@@ -41,4 +41,28 @@ export const Textarea = styled('textarea', {
     fontWeight: 500,
     color: '$darkGreen',
   }
+});
+
+export const LoadingSpan = styled(Hexile, {
+  color: '$darkGreen',
+  padding: '10rem',
+});
+export const NonSpan = styled(Hexile, {
+  color: '$darkGreen',
+  fontSize: '2rem',
+  fontWeight: 700,
+  padding: '10rem',
+});
+
+const loadingAnimation = keyframes({
+  '0%': {transform: 'rotate(0deg)'},
+  '100%': {transform: 'rotate(360deg)'}
+});
+export const LoadingIcn = styled('div', {
+  width: '3rem',
+  height: '3rem',
+  borderRadius: '50%',
+  border: '.3rem solid $brightGreen',
+  borderTop: '.3rem solid $darkGreen',
+  animation: `${loadingAnimation} .5s ease infinite`,
 });

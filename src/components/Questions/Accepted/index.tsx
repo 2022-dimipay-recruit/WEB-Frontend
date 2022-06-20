@@ -6,6 +6,7 @@ import { UserParamState } from '@/state';
 import { Question } from '@/constants/types';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 import { QCard } from './partial';
+import { LoadingIcn, LoadingSpan, NonSpan } from '../style';
 
 export const AcceptedQ: React.FC<{
   mypage: boolean;
@@ -16,10 +17,22 @@ export const AcceptedQ: React.FC<{
   const [maxPage, setMaxPage] = useState<number>(1);
   const [questions, setQuestions] = useState<Array<Question>>([]);
 
-  const fetchData = useCallback(async (refetch?: boolean) => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [processLoading, setProcessLoading] = useState<boolean>(true);
+
+  const fetchData = useCallback(async (refetch?: boolean, next?: boolean) => {
+    setProcessLoading(true);
     if(refetch) setNowPage(1);
-    const res = await api<'questionList'>('GET', `/user/list?name=${username}&type=accepted&page=${nowPage}&itemsPerPage=5`);
+    const res = await api<'questionList'>(
+      'GET',
+      `/user/list?name=${username}&type=accepted&page=${next ? nowPage+1 : nowPage}&itemsPerPage=5`
+    );
+    if(next) setNowPage(nowPage+1);
     setMaxPage(res.maxPage);
+
+    setProcessLoading(false);
+    setIsLoading(false);
+
     if(refetch) setQuestions(res.question);
     else setQuestions(prevData => {
       return [
@@ -31,22 +44,28 @@ export const AcceptedQ: React.FC<{
 
   useEffect(() => {
     (async () => {
-      await fetchData();
-    })();
-  }, [nowPage]);
-  useEffect(() => {
-    (async () => {
       await fetchData(true);
     })();
   }, [username]);
 
+  useEffect(() => {
+    setIsLoading(true);
+  }, []);
+
   useBottomScrollListener(async () => {
+    if(processLoading) return;
     if(nowPage === maxPage) return;
-    setNowPage(nowPage+1);
+    await fetchData(false, true);
   });
 
   return (
     <Vexile gap={3.6} fillx>
+      {isLoading && (
+        <LoadingSpan x='center' y='center' gap={1} fillx><span>불러 오는 중</span><LoadingIcn /></LoadingSpan>
+      )}
+      {(!isLoading && questions.length === 0) && (
+        <NonSpan x='center' y='center' fillx>답변한 질문이 없어요!</NonSpan>
+      )}
       {questions.map((info, idx) => (
         <QCard mypage={mypage} question={info} fetchData={fetchData} key={idx+200} />
       ))}
