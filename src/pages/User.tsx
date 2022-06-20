@@ -81,7 +81,7 @@ const User: React.FC = () => {
 
   const logout = () => {
     clearToken();
-    setMyInfo(undefined);
+    setMyInfo(null);
     history('/');
   };
 

@@ -21,7 +21,7 @@ const Signup: React.FC = () => {
 
   useEffect(() => {
     clearToken();
-    setInfo(undefined);
+    setInfo(null);
   }, []);
 
   const SignupSubmit = useCallback(async (e: React.FormEvent) => {

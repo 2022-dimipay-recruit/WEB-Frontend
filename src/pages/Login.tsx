@@ -20,7 +20,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     clearToken();
-    setInfo(undefined);
+    setInfo(null);
   }, []);
 
   const login = useCallback(async (e: React.FormEvent) => {
