@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '#/stitches.config';
-import { useRecoilState, useRecoilValue, useRecoilRefresher_UNSTABLE } from 'recoil';
-import { FetchUserData, FollowerListState, MyInfoState, UserParamState } from '@/state';
+import { useRecoilState, useRecoilValue, useRecoilRefresher_UNSTABLE, useSetRecoilState } from 'recoil';
+import { FetchUserData, FollowerListState, LoadingState, MyInfoState, UserParamState } from '@/state';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { PageType, QuestionType } from '@/constants/types';
 import { api, clearToken } from '@/api';
@@ -12,6 +12,7 @@ import { config, defaultProfile } from '@/constants/types';
 
 const User: React.FC = () => {
   const history = useNavigate();
+  const setLoading = useSetRecoilState(LoadingState);
   const [myInfo, setMyInfo] = useRecoilState(MyInfoState);
   const username = useRecoilValue(UserParamState);
   const userData = useRecoilValue(FetchUserData(username));
@@ -43,12 +44,13 @@ const User: React.FC = () => {
     setPage('acceptdQ');
   }, []);
   useEffect(() => {
+    setLoading(true);
     if(!userData) return history(`/${myInfo?.userName}`);
     setIsMyPage(username == myInfo?.userName);
 
-
     (async () => {
       await refetchFollowingList();
+      setLoading(false);
     })();
   }, [myInfo, userData]);
   useEffect(() => {

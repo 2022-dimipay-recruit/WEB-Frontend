@@ -25,7 +25,10 @@ export const Screen: React.FC<{
     (async () => {
       setElement(await checkAuth(Children));
 
-      if(!getAccessToken()) return setInfo(null);
+      if(!getAccessToken()) {
+        setLoading(false);
+        return setInfo(null);
+      }
       setInfo(await fetchMyData());
       if(!username) setLoading(false);
     })();
@@ -33,7 +36,6 @@ export const Screen: React.FC<{
   useEffect(() => {
     if(!username) return;
     setUserParam(username);
-    setLoading(false);
   }, [username]);
 
   return (
