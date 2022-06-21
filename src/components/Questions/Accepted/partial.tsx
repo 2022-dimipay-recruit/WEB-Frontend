@@ -23,6 +23,7 @@ export const QCard: React.FC<{
   const username = useRecoilValue(UserParamState);
   const userData = useRecoilValue(FetchUserData(username));
   const refetchUserData = useRecoilRefresher_UNSTABLE(FetchUserData(username));
+  const myInfo = useRecoilValue(MyInfoState);
 
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const [content, setContent] = useState<string>(question.answer);
@@ -45,6 +46,15 @@ export const QCard: React.FC<{
       e.preventDefault();
       await updateQ();
     }
+  };
+
+  const questionLike = async () => {
+    if(!myInfo) return makeAlert.error('로그인 후에 이용해주세요');
+    await api<'questionLike'>('POST', '/post/like', {
+      questionId: question.id, 
+    });
+    await fetchData(true);
+    refetchUserData();
   };
 
   return (
@@ -86,12 +96,12 @@ export const QCard: React.FC<{
           refetchUserData={refetchUserData}
           isUpdate={isUpdate}
           setUpdate={setIsUpdate}
-          updateQ={updateQ} />
+          updateQ={updateQ}
+          questionLike={questionLike} />
       ) : (
         <GuestBtns
           question={question}
-          fetchData={fetchData}
-          refetchUserData={refetchUserData} />)
+          questionLike={questionLike} />)
       }
     </Hexile>
   );
@@ -104,13 +114,15 @@ const Controller: React.FC<{
   isUpdate: boolean;
   setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
   updateQ: React.MouseEventHandler<HTMLButtonElement>;
+  questionLike: React.MouseEventHandler<HTMLDivElement>;
 }> = ({
   question,
   fetchData,
   refetchUserData,
   isUpdate,
   setUpdate,
-  updateQ
+  updateQ,
+  questionLike,
 }) => {
   const deleteQ = useCallback(async () => {
     if(isUpdate) setUpdate(false);
@@ -125,29 +137,18 @@ const Controller: React.FC<{
   }, [question, isUpdate]);
 
   return (
-    <Vexile gap={1}>
+    <Vexile x='center' gap={1}>
       <Button color='black' onClick={updateQ}>수정</Button>
       <Button color='black' onClick={deleteQ}>{isUpdate ? '취소' : '삭제'}</Button>
+      <Heart heart={question.likeCount} active={question.liked} onClick={questionLike} />
     </Vexile>
   );
 };
 
 const GuestBtns: React.FC<{
   question: Question;
-  fetchData: Function;
-  refetchUserData: Function;
-}> = ({ question, fetchData, refetchUserData }) => {
-  const myInfo = useRecoilValue(MyInfoState);
-
-  const questionLike = async () => {
-    if(!myInfo) return makeAlert.error('로그인 후에 이용해주세요');
-    await api<'questionLike'>('POST', '/post/like', {
-      questionId: question.id, 
-    });
-    await fetchData(true);
-    refetchUserData();
-  };
-
+  questionLike: React.MouseEventHandler<HTMLDivElement>;
+}> = ({ question, questionLike }) => {
   return (
     <Vexile x='center' y='center'>
       <Heart heart={question.likeCount} active={question.liked} onClick={questionLike} />
