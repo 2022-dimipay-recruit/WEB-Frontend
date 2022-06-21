@@ -72,8 +72,8 @@ export const QCard: React.FC<{
           placeholder='건전한 인터넷 문화를 위해 에티켓을 지켜주세요!'></Textarea>
         </ContentBox>
         <Vexile x='center' gap={1}>
-          <Button color='black' onClick={() => answer('rejected')}>거절하기</Button>
-          <Button color='black' type='submit'>답장하기</Button>
+          <Button color='black' onClick={() => answer('rejected')} responsive>거절하기</Button>
+          <Button color='black' type='submit' responsive>답장하기</Button>
         </Vexile>
       </Hexile>
     </Form>

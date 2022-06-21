@@ -168,10 +168,10 @@ const User: React.FC = () => {
             </Vexile>
           </Hexile>
           {isMyPage ? (
-            <Button color='black' onClick={logout}>로그아웃</Button>
+            <Button color='black' onClick={logout} responsive>로그아웃</Button>
           ) : (
             <Button color={followingList.includes(userData?.userName as string) ? 'bright' : 'black'}
-            onClick={follow}>{followingList.includes(userData?.userName as string) ? '언팔로우' : '팔로우'}</Button>
+            onClick={follow} responsive>{followingList.includes(userData?.userName as string) ? '언팔로우' : '팔로우'}</Button>
           )}
         </Hexile>
         <WriteBox mypage={isMyPage} gap={1.3}>
@@ -209,12 +209,12 @@ const User: React.FC = () => {
         </WriteBox>
       </ProfileContainer>
       <Vexile gap={3.6} fillx>
-        <Hexile fillx>
+        <NavigationBox>
           <Selection active={page === 'acceptdQ'} onClick={() => changePage('acceptdQ')}>답변한 질문</Selection>
           <Selection active={page === 'myQ'} onClick={() => changePage('myQ')}>보낸 질문</Selection>
           <Selection active={page === 'rejectedQ'} onClick={() => changePage('rejectedQ')}>거절 질문</Selection>
           <Selection active={page === 'receivedQ'} onClick={() => changePage('receivedQ')}>새 질문</Selection>
-        </Hexile>
+        </NavigationBox>
         <QuestionContainer>
           {page === 'acceptdQ' && (
             <AcceptedQ mypage={isMyPage} />
@@ -340,4 +340,13 @@ const Label = styled('label', {
   alignItems: 'center',
   justifyContent: 'center',
   cursor: 'pointer',
+});
+
+const NavigationBox = styled(Hexile, {
+  width: '100%',
+  overflow: 'auto',
+  '@mobile': {
+    justifyContent: 'space-between',
+    gap: '0rem',
+  }
 });

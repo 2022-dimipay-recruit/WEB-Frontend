@@ -54,13 +54,13 @@ export const Textarea = styled('textarea', {
 
 export const LoadingSpan = styled(Hexile, {
   color: '$darkGreen',
-  padding: '10rem',
+  padding: '10rem 0',
 });
 export const NonSpan = styled(Hexile, {
   color: '$darkGreen',
   fontSize: '2rem',
   fontWeight: 700,
-  padding: '10rem',
+  padding: '10rem 0',
 });
 
 const loadingAnimation = keyframes({
@@ -68,8 +68,8 @@ const loadingAnimation = keyframes({
   '100%': {transform: 'rotate(360deg)'}
 });
 export const LoadingIcn = styled('div', {
-  width: '3rem',
-  height: '3rem',
+  minWidth: '3rem',
+  minHeight: '3rem',
   borderRadius: '50%',
   border: '.3rem solid $brightGreen',
   borderTop: '.3rem solid $darkGreen',
