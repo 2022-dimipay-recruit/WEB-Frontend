@@ -50,6 +50,7 @@ const Container = styled('div', {
   width: '100vw',
   height: '100vh',
   position: 'relative',
+  overflowX: 'hidden',
   '@desktop': {
     padding: '0 20rem',
   },

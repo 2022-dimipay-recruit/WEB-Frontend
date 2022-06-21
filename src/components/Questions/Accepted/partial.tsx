@@ -138,8 +138,8 @@ const Controller: React.FC<{
 
   return (
     <Vexile x='center' gap={1}>
-      <Button color='black' onClick={updateQ}>수정</Button>
-      <Button color='black' onClick={deleteQ}>{isUpdate ? '취소' : '삭제'}</Button>
+      <Button color='black' onClick={updateQ} responsive>수정</Button>
+      <Button color='black' onClick={deleteQ} responsive>{isUpdate ? '취소' : '삭제'}</Button>
       <Heart heart={question.likeCount} active={question.liked} onClick={questionLike} />
     </Vexile>
   );

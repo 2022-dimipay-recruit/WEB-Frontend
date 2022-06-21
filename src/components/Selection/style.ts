@@ -7,6 +7,9 @@ export const Wrapper = styled('div', {
   lineHeight: '2.4rem',
   textAlign: 'center',
   cursor: 'pointer',
+  '@mobile': {
+    width: 'fit-content',
+  },
   variants: {
     active: {
       true: {

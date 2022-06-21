@@ -29,6 +29,7 @@ export const Wrapper = styled('button', {
       },
       false: {
         width: 'fit-content',
+        whiteSpace: 'nowrap',
       }
     },
     responsive: {
