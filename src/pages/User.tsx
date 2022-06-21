@@ -45,7 +45,7 @@ const User: React.FC = () => {
   }, []);
   useEffect(() => {
     setLoading(true);
-    if(!userData) return history(`/${myInfo?.userName}`);
+    if(!userData) return history(`/${myInfo?.userName || ''}`);
     setIsMyPage(username == myInfo?.userName);
 
     (async () => {
