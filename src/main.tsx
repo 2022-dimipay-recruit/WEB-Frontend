@@ -1,10 +1,9 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   BrowserRouter,
   Routes,
   Route,
-  useParams,
 } from 'react-router-dom';
 import { globalCss } from '#/stitches.config';
 import {
