@@ -55,7 +55,14 @@ export const Topbar: React.FC = () => {
             </ProfileBox>
           </ProfileContainer>
         ) : (
-          <Button color='black' onClick={() => history('/login')} responsive>로그인</Button>
+          <IcnBox y='center' filly>
+            {location.pathname === '/feed' ? (
+              <FeedIcnActive />
+            ) : (
+              <FeedIcn onClick={() => history('/feed')} />
+            )}
+            <Button color='black' onClick={() => history('/login')} responsive>로그인</Button>
+          </IcnBox>
         )
       }
       <Modal type='notification' active={notifiFocus} content={content} />
