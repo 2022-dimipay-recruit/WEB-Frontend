@@ -60,7 +60,7 @@ const SignupImage: React.FC = () => {
           </Vexile>
           <Checkbox
           id='policyAllow'
-          label={<Policy><Link href='/src/assets/privacyPolicy.html' target='_blank'>개인정보처리방침</Link>에 동의합니다.</Policy>}
+          label={<Policy><Link href='http://privacyPolicy.kro.kr' target='_blank'>개인정보처리방침</Link>에 동의합니다.</Policy>}
           value='policyAllow' />
           <Button color='black' type='submit'>가입</Button>
         </Vexile>
