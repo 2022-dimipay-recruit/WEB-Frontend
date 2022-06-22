@@ -322,6 +322,9 @@ const WriteTextArea = styled('textarea', {
     fontSize: '1.4rem',
     fontWeight: 500,
     color: '$darkGreen',
+  },
+  '@mobile': {
+    width: '100%',
   }
 });
 
