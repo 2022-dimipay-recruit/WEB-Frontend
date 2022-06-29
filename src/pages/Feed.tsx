@@ -4,7 +4,7 @@ import { styled } from '#/stitches.config';
 import { Hexile, Vexile } from '@haechi/flexile';
 import { config, defaultProfile, Feed } from '@/constants/types';
 import { api } from '@/api';
-import { Answer, ContentBox, Name, ProfileImg, QuestionTitle } from '@/components/Questions/style';
+import { Answer, ContentBox, Name, NonSpan, ProfileImg, QuestionTitle } from '@/components/Questions/style';
 import { Heart } from '@/components';
 import { useRecoilValue } from 'recoil';
 import { MyInfoState } from '@/state';
@@ -40,6 +40,9 @@ const FeedPage: React.FC = () => {
   return (
     <Wrapper gap={3.6} fillx>
       <Title>뉴스피드</Title>
+      {(feeds.followingFeed?.length == 0 && feeds.randomFeed.length == 0) && (
+        <NonSpan>최근 3일동안의 기록이 없어요..</NonSpan>
+      )}
       {feeds.followingFeed &&(
         feeds.followingFeed.map((info, idx) => {
           return info.follower.received.map((question, idx1) => (
