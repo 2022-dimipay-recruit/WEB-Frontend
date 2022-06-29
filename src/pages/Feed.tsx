@@ -40,7 +40,7 @@ const FeedPage: React.FC = () => {
   return (
     <Wrapper gap={3.6} fillx>
       <Title>뉴스피드</Title>
-      {(feeds.followingFeed?.length == 0 && feeds.randomFeed.length == 0) && (
+      {((!feeds.followingFeed || feeds.followingFeed.length == 0) && feeds.randomFeed.length == 0) && (
         <NonSpan>최근 3일동안의 기록이 없어요..</NonSpan>
       )}
       {feeds.followingFeed &&(
